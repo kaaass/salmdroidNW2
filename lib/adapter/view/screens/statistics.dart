@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/src/widgets/image.dart' as materialImage;
 
 import '../../../adapter/view/app_bar/shift_app_bar.dart';
 import '../../../adapter/view/common_view/inner_tab_controller.dart';
@@ -388,21 +389,21 @@ class InnerStats {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Image.asset(Common.getImageScaleBronze(), height: height),
+              // Image.asset(Common.getImageScaleBronze(), height: height),
               WidgetUtil.createText('${stat.scale.bronze}', 14),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Image.asset(Common.getImageScaleSilver(), height: height),
+              // Image.asset(Common.getImageScaleSilver(), height: height),
               WidgetUtil.createText('${stat.scale.silver}', 14),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Image.asset(Common.getImageScaleGold(), height: height),
+              // Image.asset(Common.getImageScaleGold(), height: height),
               WidgetUtil.createText('${stat.scale.gold}', 14),
             ],
           ),
@@ -413,13 +414,14 @@ class InnerStats {
 
   Widget createOkashiraGraph() {
     Widget tw = WidgetUtil.createText(L10n.of(context)!.bossName, 12);
-    Widget im = stat.okashiraId != null
-        ? SizedBox(
-            width: 20,
-            child: Image.asset(
-              Common.getOkashira(stat.okashiraId!),
-            ))
-        : Container();
+    // Widget im = stat.okashiraId != null
+    //     ? SizedBox(
+    //         width: 20,
+    //         child: Image.asset(
+    //           Common.getOkashira(stat.okashiraId!),
+    //         ))
+    //     : Container();
+    Widget im = Container();
     int totalWin = 0, totalLose = 0;
     Tide tide = Tide();
     for (int i = 0; i < 3; i++) {
@@ -568,21 +570,21 @@ class InnerStats {
 
   TableRow _createDayNightIkuraRow(double day, double night, int i) {
     Widget tw;
-    Widget im;
+    Widget im = Container();
     switch (i) {
       case 0:
         tw = WidgetUtil.createText(L10n.of(context)!.goldenEgg, 12);
-        im = Image.asset(
-          Common.getImageGikura(),
-          scale: 7.0,
-        );
+        // im = Image.asset(
+        //   Common.getImageGikura(),
+        //   scale: 7.0,
+        // );
         break;
       case 1:
         tw = WidgetUtil.createText(L10n.of(context)!.powerEgg, 12);
-        im = Image.asset(
-          Common.getImageIkura(),
-          scale: 11.0,
-        );
+        // im = Image.asset(
+        //   Common.getImageIkura(),
+        //   scale: 11.0,
+        // );
         break;
       default:
         throw Exception();
@@ -609,43 +611,43 @@ class InnerStats {
   TableRow createIkuraTableRow(double avg, double max, double ttl, int i,
       [bool isEmpty = false]) {
     Widget tw;
-    Widget im;
+    Widget im = Container();
 
     switch (i) {
       case 0:
         tw = WidgetUtil.createText(L10n.of(context)!.goldenEgg, 12);
-        im = Image.asset(
-          Common.getImageGikura(),
-          scale: 7.0,
-        );
+        // im = Image.asset(
+        //   Common.getImageGikura(),
+        //   scale: 7.0,
+        // );
         break;
       case 1:
         tw = WidgetUtil.createText(L10n.of(context)!.powerEgg, 12);
-        im = Image.asset(
-          Common.getImageIkura(),
-          scale: 11.0,
-        );
+        // im = Image.asset(
+        //   Common.getImageIkura(),
+        //   scale: 11.0,
+        // );
         break;
       case 2:
         tw = WidgetUtil.createText(L10n.of(context)!.statRescue, 12);
-        im = Image.asset(
-          Common.getImageRescue(),
-          scale: 7.0,
-        );
+        // im = Image.asset(
+        //   Common.getImageRescue(),
+        //   scale: 7.0,
+        // );
         break;
       case 3:
         tw = WidgetUtil.createText(L10n.of(context)!.statRescued, 12);
-        im = Image.asset(
-          Common.getImageDead(),
-          scale: 7.0,
-        );
+        // im = Image.asset(
+        //   Common.getImageDead(),
+        //   scale: 7.0,
+        // );
         break;
       case 4:
         tw = WidgetUtil.createText(L10n.of(context)!.statDefeat, 12);
-        im = Image.asset(
-          Common.getSakelienGolden(),
-          scale: 20.0,
-        );
+        // im = Image.asset(
+        //   Common.getSakelienGolden(),
+        //   scale: 20.0,
+        // );
         break;
       default:
         throw Exception();
@@ -726,7 +728,7 @@ class InnerStats {
                       alignment: Alignment.bottomCenter,
                       child: Opacity(
                         opacity: 0.5,
-                        child: Image.asset(Common.getWave()),
+                        child: Container(),//Image.asset(Common.getWave()),
                       ),
                     ),
                   ),
@@ -1280,10 +1282,12 @@ class InnerStats {
     return SideTitleWidget(
         axisSide: meta.axisSide,
         space: 2,
-        child: Image.asset(
-          Common.getOomono(bossNameList[n]),
-          scale: 5,
-        ));
+        child: Container()
+        //  Image.asset(
+        //   Common.getOomono(bossNameList[n]),
+        //   scale: 5,
+        //)
+        );
   }
 
   Widget getEmptyAxWidget(double value, TitleMeta meta) {
@@ -1488,10 +1492,11 @@ class InnerStatsForEggstraWork extends InnerStats {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 3),
-                      child: Image.asset(
-                        Common.getImageGikura(),
-                        scale: 4.5,
-                      ),
+                      child: Container()
+                      //  Image.asset(
+                      //   Common.getImageGikura(),
+                      //   scale: 4.5,
+                      // ),
                     ),
                     WidgetUtil.createText(L10n.of(context)!.eggs, 14),
                   ],
@@ -1512,10 +1517,11 @@ class InnerStatsForEggstraWork extends InnerStats {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 3),
-                      child: Image.asset(
-                        Common.getImageGikura(),
-                        scale: 4.5,
-                      ),
+                      child: Container()
+                      //  Image.asset(
+                      //   Common.getImageGikura(),
+                      //   scale: 4.5,
+                      // ),
                     ),
                     WidgetUtil.createText(L10n.of(context)!.popEggs, 14),
                   ],
@@ -1603,7 +1609,7 @@ class InnerStatsForEggstraWork extends InnerStats {
                       children: [
                         Row(
                           children: [
-                            Image.asset(Common.getImageGikura(), scale: 4.5),
+                            // Image.asset(Common.getImageGikura(), scale: 4.5),
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: WidgetUtil.createText(
@@ -1613,7 +1619,7 @@ class InnerStatsForEggstraWork extends InnerStats {
                         ),
                         Row(
                           children: [
-                            Image.asset(Common.getImageIkura(), scale: 10.0),
+                            // Image.asset(Common.getImageIkura(), scale: 10.0),
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: WidgetUtil.createText(

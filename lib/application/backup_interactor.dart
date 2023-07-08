@@ -6,6 +6,8 @@ import 'package:archive/archive_io.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:salmdroidnw2/util/converter/coop_history_detail_converter.dart';
+import 'package:salmdroidnw2/util/converter/shift_converter.dart';
 
 import '../application/app_data_instractor.dart';
 import '../application/data_interactor.dart';
@@ -14,7 +16,6 @@ import '../domain/coop_history_detail/coop_history_detail.dart';
 import '../domain/salmonrun_data/fix_schedule.dart';
 import '../domain/salmonrun_data/rule.dart';
 import '../domain/shift/shift.dart';
-import '../util/converter.dart';
 import '../util/log.dart';
 import 'interface/i_coopdetail_repository.dart';
 import 'interface/i_shift_repository.dart';
@@ -182,7 +183,7 @@ class BackupInteractor with ChangeNotifier {
     // shift
     List<Shift> shiftList = [];
     for (var shift in shifts) {
-      Shift newShift = DataConverter.toShift(shift);
+      Shift newShift = ShiftConverter.createShiftFromMap(shift);
 
       if (newShift.rule == '') {
         bool isAdd = false;
@@ -214,7 +215,8 @@ class BackupInteractor with ChangeNotifier {
       if (now % 1000 == 0) {
         Log.i('now: $now');
       }
-      histories.add(DataConverter.toCoopHistoryDetail(d));
+      histories
+          .add(CoopHistoryDetailConverter.createCoopHistoryDetailFromMap(d));
 
       now++;
       _notify(BackupType.restore, now, numShifts, numResults);

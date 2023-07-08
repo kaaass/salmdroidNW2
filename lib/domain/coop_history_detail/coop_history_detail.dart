@@ -74,7 +74,7 @@ class Nameplate {
 @embedded
 class Background {
   late TextColor textColor;
-  late Url url;
+  late Image image;
   late String id;
 }
 
@@ -87,34 +87,34 @@ class TextColor {
 }
 
 @embedded
-class Url {
+class Image {
   late String url;
 }
 
 @embedded
 class Badge {
   late String id;
-  late Url image;
+  late Image image;
 }
 
 @embedded
 class Uniform {
   late String name;
-  late Url image;
+  late Image image;
   late String id;
 }
 
 @embedded
 class Weapon {
   late String name;
-  late Url image;
+  late Image image;
 }
 
 @embedded
 class SpecialWeapon {
   late String name;
   late String id;
-  late Url image;
+  late Image image;
 }
 
 @embedded
@@ -127,7 +127,7 @@ class BossResult {
 class Boss {
   late String name;
   late String id;
-  late Url image;
+  late Image image;
 }
 
 @embedded
@@ -158,7 +158,7 @@ class EventWave {
 @embedded
 class CoopStage {
   late String name;
-  late Url image;
+  late Image image;
   late String id;
 }
 

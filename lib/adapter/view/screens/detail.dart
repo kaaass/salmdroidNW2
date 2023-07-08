@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/src/widgets/image.dart' as materialImage;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -401,7 +402,7 @@ class _Detail extends State<Detail> {
             children: [
               Row(
                 children: [
-                  Image.asset(
+                  materialImage.Image.asset(
                     Common.getImageGikura(),
                     scale: 4.5,
                   ),
@@ -415,7 +416,7 @@ class _Detail extends State<Detail> {
                 padding: const EdgeInsets.only(left: 15),
                 child: Row(
                   children: [
-                    Image.asset(
+                    materialImage.Image.asset(
                       Common.getImageIkura(),
                       scale: 8,
                     ),
@@ -436,7 +437,7 @@ class _Detail extends State<Detail> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(Common.getImageScaleBronze(), width: width),
+                    materialImage.Image.asset(Common.getImageScaleBronze(), width: width),
                     Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: WidgetUtil.createText(
@@ -455,7 +456,7 @@ class _Detail extends State<Detail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(Common.getImageScaleSilver(), width: width),
+                      materialImage.Image.asset(Common.getImageScaleSilver(), width: width),
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: WidgetUtil.createText(
@@ -475,7 +476,7 @@ class _Detail extends State<Detail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(Common.getImageScaleGold(), width: width),
+                      materialImage.Image.asset(Common.getImageScaleGold(), width: width),
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: WidgetUtil.createText(
@@ -534,7 +535,7 @@ class _Detail extends State<Detail> {
                 sections: sections),
           ),
           Center(
-            child: Image.asset(uri, scale: sc),
+            child: materialImage.Image.asset(uri, scale: sc),
           ),
         ],
       ),
@@ -796,7 +797,7 @@ class _Detail extends State<Detail> {
                             alignment: Alignment.bottomCenter,
                             child: Opacity(
                               opacity: 0.5,
-                              child: Image.asset(Common.getWave()),
+                              child: materialImage.Image.asset(Common.getWave()),
                             ),
                           ),
                         ),
@@ -1034,7 +1035,7 @@ class _Detail extends State<Detail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Stack(children: [
-                  Image.asset(
+                  materialImage.Image.asset(
                     uri,
                     scale: sc,
                     // colorBlendMode: BlendMode.modulate,
@@ -1130,7 +1131,7 @@ class _Detail extends State<Detail> {
         space: 2,
         child: RotatedBox(
             quarterTurns: -1,
-            child: Image.asset(
+            child: materialImage.Image.asset(
               Common.getOomono(bossList[n]),
               scale: 5,
             )));

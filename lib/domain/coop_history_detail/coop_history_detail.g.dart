@@ -171,7 +171,7 @@ const CoopHistoryDetailSchema = CollectionSchema(
     r'Player': PlayerSchema,
     r'Nameplate': NameplateSchema,
     r'Badge': BadgeSchema,
-    r'Url': UrlSchema,
+    r'Image': ImageSchema,
     r'Background': BackgroundSchema,
     r'TextColor': TextColorSchema,
     r'Uniform': UniformSchema,
@@ -5271,17 +5271,17 @@ const BackgroundSchema = Schema(
       name: r'id',
       type: IsarType.string,
     ),
-    r'textColor': PropertySchema(
+    r'image': PropertySchema(
       id: 1,
+      name: r'image',
+      type: IsarType.object,
+      target: r'Image',
+    ),
+    r'textColor': PropertySchema(
+      id: 2,
       name: r'textColor',
       type: IsarType.object,
       target: r'TextColor',
-    ),
-    r'url': PropertySchema(
-      id: 2,
-      name: r'url',
-      type: IsarType.object,
-      target: r'Url',
     )
   },
   estimateSize: _backgroundEstimateSize,
@@ -5298,10 +5298,10 @@ int _backgroundEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
+  bytesCount += 3 +
       TextColorSchema.estimateSize(
           object.textColor, allOffsets[TextColor]!, allOffsets);
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.url, allOffsets[Url]!, allOffsets);
   return bytesCount;
 }
 
@@ -5312,17 +5312,17 @@ void _backgroundSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.id);
-  writer.writeObject<TextColor>(
+  writer.writeObject<Image>(
     offsets[1],
+    allOffsets,
+    ImageSchema.serialize,
+    object.image,
+  );
+  writer.writeObject<TextColor>(
+    offsets[2],
     allOffsets,
     TextColorSchema.serialize,
     object.textColor,
-  );
-  writer.writeObject<Url>(
-    offsets[2],
-    allOffsets,
-    UrlSchema.serialize,
-    object.url,
   );
 }
 
@@ -5334,18 +5334,18 @@ Background _backgroundDeserialize(
 ) {
   final object = Background();
   object.id = reader.readString(offsets[0]);
-  object.textColor = reader.readObjectOrNull<TextColor>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[1],
+        ImageSchema.deserialize,
+        allOffsets,
+      ) ??
+      Image();
+  object.textColor = reader.readObjectOrNull<TextColor>(
+        offsets[2],
         TextColorSchema.deserialize,
         allOffsets,
       ) ??
       TextColor();
-  object.url = reader.readObjectOrNull<Url>(
-        offsets[2],
-        UrlSchema.deserialize,
-        allOffsets,
-      ) ??
-      Url();
   return object;
 }
 
@@ -5359,19 +5359,19 @@ P _backgroundDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
+      return (reader.readObjectOrNull<Image>(
+            offset,
+            ImageSchema.deserialize,
+            allOffsets,
+          ) ??
+          Image()) as P;
+    case 2:
       return (reader.readObjectOrNull<TextColor>(
             offset,
             TextColorSchema.deserialize,
             allOffsets,
           ) ??
           TextColor()) as P;
-    case 2:
-      return (reader.readObjectOrNull<Url>(
-            offset,
-            UrlSchema.deserialize,
-            allOffsets,
-          ) ??
-          Url()) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -5512,17 +5512,17 @@ extension BackgroundQueryFilter
 
 extension BackgroundQueryObject
     on QueryBuilder<Background, Background, QFilterCondition> {
+  QueryBuilder<Background, Background, QAfterFilterCondition> image(
+      FilterQuery<Image> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'image');
+    });
+  }
+
   QueryBuilder<Background, Background, QAfterFilterCondition> textColor(
       FilterQuery<TextColor> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'textColor');
-    });
-  }
-
-  QueryBuilder<Background, Background, QAfterFilterCondition> url(
-      FilterQuery<Url> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'url');
     });
   }
 }
@@ -5873,9 +5873,9 @@ extension TextColorQueryObject
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-const UrlSchema = Schema(
-  name: r'Url',
-  id: -4123948750620638102,
+const ImageSchema = Schema(
+  name: r'Image',
+  id: -4937595749021071036,
   properties: {
     r'url': PropertySchema(
       id: 0,
@@ -5883,14 +5883,14 @@ const UrlSchema = Schema(
       type: IsarType.string,
     )
   },
-  estimateSize: _urlEstimateSize,
-  serialize: _urlSerialize,
-  deserialize: _urlDeserialize,
-  deserializeProp: _urlDeserializeProp,
+  estimateSize: _imageEstimateSize,
+  serialize: _imageSerialize,
+  deserialize: _imageDeserialize,
+  deserializeProp: _imageDeserializeProp,
 );
 
-int _urlEstimateSize(
-  Url object,
+int _imageEstimateSize(
+  Image object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -5899,8 +5899,8 @@ int _urlEstimateSize(
   return bytesCount;
 }
 
-void _urlSerialize(
-  Url object,
+void _imageSerialize(
+  Image object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -5908,18 +5908,18 @@ void _urlSerialize(
   writer.writeString(offsets[0], object.url);
 }
 
-Url _urlDeserialize(
+Image _imageDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Url();
+  final object = Image();
   object.url = reader.readString(offsets[0]);
   return object;
 }
 
-P _urlDeserializeProp<P>(
+P _imageDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -5933,8 +5933,8 @@ P _urlDeserializeProp<P>(
   }
 }
 
-extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlEqualTo(
+extension ImageQueryFilter on QueryBuilder<Image, Image, QFilterCondition> {
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -5947,7 +5947,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlGreaterThan(
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -5962,7 +5962,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlLessThan(
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -5977,7 +5977,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlBetween(
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -5996,7 +5996,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlStartsWith(
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -6009,7 +6009,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlEndsWith(
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -6022,7 +6022,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlContains(String value,
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -6033,7 +6033,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlMatches(String pattern,
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -6044,7 +6044,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlIsEmpty() {
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'url',
@@ -6053,7 +6053,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Url, Url, QAfterFilterCondition> urlIsNotEmpty() {
+  QueryBuilder<Image, Image, QAfterFilterCondition> urlIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'url',
@@ -6063,7 +6063,7 @@ extension UrlQueryFilter on QueryBuilder<Url, Url, QFilterCondition> {
   }
 }
 
-extension UrlQueryObject on QueryBuilder<Url, Url, QFilterCondition> {}
+extension ImageQueryObject on QueryBuilder<Image, Image, QFilterCondition> {}
 
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
@@ -6081,7 +6081,7 @@ const BadgeSchema = Schema(
       id: 1,
       name: r'image',
       type: IsarType.object,
-      target: r'Url',
+      target: r'Image',
     )
   },
   estimateSize: _badgeEstimateSize,
@@ -6097,8 +6097,8 @@ int _badgeEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.image, allOffsets[Url]!, allOffsets);
+  bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
   return bytesCount;
 }
 
@@ -6109,10 +6109,10 @@ void _badgeSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.id);
-  writer.writeObject<Url>(
+  writer.writeObject<Image>(
     offsets[1],
     allOffsets,
-    UrlSchema.serialize,
+    ImageSchema.serialize,
     object.image,
   );
 }
@@ -6125,12 +6125,12 @@ Badge _badgeDeserialize(
 ) {
   final object = Badge();
   object.id = reader.readString(offsets[0]);
-  object.image = reader.readObjectOrNull<Url>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[1],
-        UrlSchema.deserialize,
+        ImageSchema.deserialize,
         allOffsets,
       ) ??
-      Url();
+      Image();
   return object;
 }
 
@@ -6144,12 +6144,12 @@ P _badgeDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readObjectOrNull<Url>(
+      return (reader.readObjectOrNull<Image>(
             offset,
-            UrlSchema.deserialize,
+            ImageSchema.deserialize,
             allOffsets,
           ) ??
-          Url()) as P;
+          Image()) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -6286,7 +6286,8 @@ extension BadgeQueryFilter on QueryBuilder<Badge, Badge, QFilterCondition> {
 }
 
 extension BadgeQueryObject on QueryBuilder<Badge, Badge, QFilterCondition> {
-  QueryBuilder<Badge, Badge, QAfterFilterCondition> image(FilterQuery<Url> q) {
+  QueryBuilder<Badge, Badge, QAfterFilterCondition> image(
+      FilterQuery<Image> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'image');
     });
@@ -6309,7 +6310,7 @@ const UniformSchema = Schema(
       id: 1,
       name: r'image',
       type: IsarType.object,
-      target: r'Url',
+      target: r'Image',
     ),
     r'name': PropertySchema(
       id: 2,
@@ -6330,8 +6331,8 @@ int _uniformEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.image, allOffsets[Url]!, allOffsets);
+  bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
   bytesCount += 3 + object.name.length * 3;
   return bytesCount;
 }
@@ -6343,10 +6344,10 @@ void _uniformSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.id);
-  writer.writeObject<Url>(
+  writer.writeObject<Image>(
     offsets[1],
     allOffsets,
-    UrlSchema.serialize,
+    ImageSchema.serialize,
     object.image,
   );
   writer.writeString(offsets[2], object.name);
@@ -6360,12 +6361,12 @@ Uniform _uniformDeserialize(
 ) {
   final object = Uniform();
   object.id = reader.readString(offsets[0]);
-  object.image = reader.readObjectOrNull<Url>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[1],
-        UrlSchema.deserialize,
+        ImageSchema.deserialize,
         allOffsets,
       ) ??
-      Url();
+      Image();
   object.name = reader.readString(offsets[2]);
   return object;
 }
@@ -6380,12 +6381,12 @@ P _uniformDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readObjectOrNull<Url>(
+      return (reader.readObjectOrNull<Image>(
             offset,
-            UrlSchema.deserialize,
+            ImageSchema.deserialize,
             allOffsets,
           ) ??
-          Url()) as P;
+          Image()) as P;
     case 2:
       return (reader.readString(offset)) as P;
     default:
@@ -6658,7 +6659,7 @@ extension UniformQueryFilter
 extension UniformQueryObject
     on QueryBuilder<Uniform, Uniform, QFilterCondition> {
   QueryBuilder<Uniform, Uniform, QAfterFilterCondition> image(
-      FilterQuery<Url> q) {
+      FilterQuery<Image> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'image');
     });
@@ -6676,7 +6677,7 @@ const WeaponSchema = Schema(
       id: 0,
       name: r'image',
       type: IsarType.object,
-      target: r'Url',
+      target: r'Image',
     ),
     r'name': PropertySchema(
       id: 1,
@@ -6696,8 +6697,8 @@ int _weaponEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.image, allOffsets[Url]!, allOffsets);
+  bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
   bytesCount += 3 + object.name.length * 3;
   return bytesCount;
 }
@@ -6708,10 +6709,10 @@ void _weaponSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeObject<Url>(
+  writer.writeObject<Image>(
     offsets[0],
     allOffsets,
-    UrlSchema.serialize,
+    ImageSchema.serialize,
     object.image,
   );
   writer.writeString(offsets[1], object.name);
@@ -6724,12 +6725,12 @@ Weapon _weaponDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Weapon();
-  object.image = reader.readObjectOrNull<Url>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[0],
-        UrlSchema.deserialize,
+        ImageSchema.deserialize,
         allOffsets,
       ) ??
-      Url();
+      Image();
   object.name = reader.readString(offsets[1]);
   return object;
 }
@@ -6742,12 +6743,12 @@ P _weaponDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readObjectOrNull<Url>(
+      return (reader.readObjectOrNull<Image>(
             offset,
-            UrlSchema.deserialize,
+            ImageSchema.deserialize,
             allOffsets,
           ) ??
-          Url()) as P;
+          Image()) as P;
     case 1:
       return (reader.readString(offset)) as P;
     default:
@@ -6888,7 +6889,7 @@ extension WeaponQueryFilter on QueryBuilder<Weapon, Weapon, QFilterCondition> {
 
 extension WeaponQueryObject on QueryBuilder<Weapon, Weapon, QFilterCondition> {
   QueryBuilder<Weapon, Weapon, QAfterFilterCondition> image(
-      FilterQuery<Url> q) {
+      FilterQuery<Image> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'image');
     });
@@ -6911,7 +6912,7 @@ const SpecialWeaponSchema = Schema(
       id: 1,
       name: r'image',
       type: IsarType.object,
-      target: r'Url',
+      target: r'Image',
     ),
     r'name': PropertySchema(
       id: 2,
@@ -6932,8 +6933,8 @@ int _specialWeaponEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.image, allOffsets[Url]!, allOffsets);
+  bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
   bytesCount += 3 + object.name.length * 3;
   return bytesCount;
 }
@@ -6945,10 +6946,10 @@ void _specialWeaponSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.id);
-  writer.writeObject<Url>(
+  writer.writeObject<Image>(
     offsets[1],
     allOffsets,
-    UrlSchema.serialize,
+    ImageSchema.serialize,
     object.image,
   );
   writer.writeString(offsets[2], object.name);
@@ -6962,12 +6963,12 @@ SpecialWeapon _specialWeaponDeserialize(
 ) {
   final object = SpecialWeapon();
   object.id = reader.readString(offsets[0]);
-  object.image = reader.readObjectOrNull<Url>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[1],
-        UrlSchema.deserialize,
+        ImageSchema.deserialize,
         allOffsets,
       ) ??
-      Url();
+      Image();
   object.name = reader.readString(offsets[2]);
   return object;
 }
@@ -6982,12 +6983,12 @@ P _specialWeaponDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readObjectOrNull<Url>(
+      return (reader.readObjectOrNull<Image>(
             offset,
-            UrlSchema.deserialize,
+            ImageSchema.deserialize,
             allOffsets,
           ) ??
-          Url()) as P;
+          Image()) as P;
     case 2:
       return (reader.readString(offset)) as P;
     default:
@@ -7270,7 +7271,7 @@ extension SpecialWeaponQueryFilter
 extension SpecialWeaponQueryObject
     on QueryBuilder<SpecialWeapon, SpecialWeapon, QFilterCondition> {
   QueryBuilder<SpecialWeapon, SpecialWeapon, QAfterFilterCondition> image(
-      FilterQuery<Url> q) {
+      FilterQuery<Image> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'image');
     });
@@ -7405,7 +7406,7 @@ const BossSchema = Schema(
       id: 1,
       name: r'image',
       type: IsarType.object,
-      target: r'Url',
+      target: r'Image',
     ),
     r'name': PropertySchema(
       id: 2,
@@ -7426,8 +7427,8 @@ int _bossEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.image, allOffsets[Url]!, allOffsets);
+  bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
   bytesCount += 3 + object.name.length * 3;
   return bytesCount;
 }
@@ -7439,10 +7440,10 @@ void _bossSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.id);
-  writer.writeObject<Url>(
+  writer.writeObject<Image>(
     offsets[1],
     allOffsets,
-    UrlSchema.serialize,
+    ImageSchema.serialize,
     object.image,
   );
   writer.writeString(offsets[2], object.name);
@@ -7456,12 +7457,12 @@ Boss _bossDeserialize(
 ) {
   final object = Boss();
   object.id = reader.readString(offsets[0]);
-  object.image = reader.readObjectOrNull<Url>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[1],
-        UrlSchema.deserialize,
+        ImageSchema.deserialize,
         allOffsets,
       ) ??
-      Url();
+      Image();
   object.name = reader.readString(offsets[2]);
   return object;
 }
@@ -7476,12 +7477,12 @@ P _bossDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readObjectOrNull<Url>(
+      return (reader.readObjectOrNull<Image>(
             offset,
-            UrlSchema.deserialize,
+            ImageSchema.deserialize,
             allOffsets,
           ) ??
-          Url()) as P;
+          Image()) as P;
     case 2:
       return (reader.readString(offset)) as P;
     default:
@@ -7748,7 +7749,7 @@ extension BossQueryFilter on QueryBuilder<Boss, Boss, QFilterCondition> {
 }
 
 extension BossQueryObject on QueryBuilder<Boss, Boss, QFilterCondition> {
-  QueryBuilder<Boss, Boss, QAfterFilterCondition> image(FilterQuery<Url> q) {
+  QueryBuilder<Boss, Boss, QAfterFilterCondition> image(FilterQuery<Image> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'image');
     });
@@ -9003,7 +9004,7 @@ const CoopStageSchema = Schema(
       id: 1,
       name: r'image',
       type: IsarType.object,
-      target: r'Url',
+      target: r'Image',
     ),
     r'name': PropertySchema(
       id: 2,
@@ -9024,8 +9025,8 @@ int _coopStageEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
-  bytesCount +=
-      3 + UrlSchema.estimateSize(object.image, allOffsets[Url]!, allOffsets);
+  bytesCount += 3 +
+      ImageSchema.estimateSize(object.image, allOffsets[Image]!, allOffsets);
   bytesCount += 3 + object.name.length * 3;
   return bytesCount;
 }
@@ -9037,10 +9038,10 @@ void _coopStageSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.id);
-  writer.writeObject<Url>(
+  writer.writeObject<Image>(
     offsets[1],
     allOffsets,
-    UrlSchema.serialize,
+    ImageSchema.serialize,
     object.image,
   );
   writer.writeString(offsets[2], object.name);
@@ -9054,12 +9055,12 @@ CoopStage _coopStageDeserialize(
 ) {
   final object = CoopStage();
   object.id = reader.readString(offsets[0]);
-  object.image = reader.readObjectOrNull<Url>(
+  object.image = reader.readObjectOrNull<Image>(
         offsets[1],
-        UrlSchema.deserialize,
+        ImageSchema.deserialize,
         allOffsets,
       ) ??
-      Url();
+      Image();
   object.name = reader.readString(offsets[2]);
   return object;
 }
@@ -9074,12 +9075,12 @@ P _coopStageDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readObjectOrNull<Url>(
+      return (reader.readObjectOrNull<Image>(
             offset,
-            UrlSchema.deserialize,
+            ImageSchema.deserialize,
             allOffsets,
           ) ??
-          Url()) as P;
+          Image()) as P;
     case 2:
       return (reader.readString(offset)) as P;
     default:
@@ -9353,7 +9354,7 @@ extension CoopStageQueryFilter
 extension CoopStageQueryObject
     on QueryBuilder<CoopStage, CoopStage, QFilterCondition> {
   QueryBuilder<CoopStage, CoopStage, QAfterFilterCondition> image(
-      FilterQuery<Url> q) {
+      FilterQuery<Image> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'image');
     });
