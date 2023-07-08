@@ -1,14 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as path;
 import 'package:salmdroidnw2/domain/coop_history_detail/coop_history_detail.dart';
-import 'package:salmdroidnw2/domain/defeat/defeat.dart';
-import 'package:salmdroidnw2/domain/king_defeat/king_defeat.dart';
-import 'package:salmdroidnw2/domain/shift/shift.dart';
 
-class DataConverter {
-  static CoopHistoryDetail toCoopHistoryDetail(Map<String, dynamic> org) {
-    Url url = Url()..url = '';
+class CoopHistoryDetailConverter {
+  static CoopHistoryDetail createEmptyCoopHistoryDetail() {
+    Image url = Image()..url = '';
     TextColor textColor = TextColor()
       ..a = 0
       ..b = 0
@@ -16,7 +14,7 @@ class DataConverter {
       ..r = 0;
     Background background = Background()
       ..textColor = textColor
-      ..url = url
+      ..image = url
       ..id = '';
     Nameplate nameplate = Nameplate()
       ..badges = []
@@ -75,56 +73,15 @@ class DataConverter {
       ..prevHistoryDetail = null;
   }
 
-  static Shift toShift(Map<String, dynamic> org) {
-    return Shift()
-      ..start = ''
-      ..end = ''
-      ..stageId = ''
-      ..weapons = []
-      ..maxGradeId = ''
-      ..maxGradePoint = 0
-      ..maxEggs = 0
-      ..played = 0
-      ..rule = ''
-      ..kingSalmonids = '';
+  static CoopHistoryDetail createCoopHistoryDetailFromMap(
+      Map<String, dynamic> org) {
+    return createCoopHistoryDetailFromMap2(jsonDecode(org['coopHistory']));
   }
 
-  static Defeat toDefeat(Map<String, dynamic>? org) {
-    if (org == null) {
-      return Defeat()
-        ..num = 0
-        ..latestId = ''
-        ..coopEnemy4 = 0
-        ..coopEnemy5 = 0
-        ..coopEnemy6 = 0
-        ..coopEnemy7 = 0
-        ..coopEnemy8 = 0
-        ..coopEnemy9 = 0
-        ..coopEnemy10 = 0
-        ..coopEnemy11 = 0
-        ..coopEnemy12 = 0
-        ..coopEnemy13 = 0
-        ..coopEnemy14 = 0;
-    } else {
-      return Defeat();
-    }
-  }
-
-  static KingDefeat toKingDefeat(Map<String, dynamic>? org) {
-    if (org == null) {
-      return KingDefeat()
-        ..num = 0
-        ..latestId = ''
-        ..coopEnemy23 = 0
-        ..coopEnemy24 = 0;
-    } else {
-      return KingDefeat();
-    }
-  }
-
-  static CoopHistoryDetail _createFromMap(Map<String, dynamic> org) {
+  static CoopHistoryDetail createCoopHistoryDetailFromMap2(
+      Map<String, dynamic> org) {
     List<PlayerResult> memberResult = [];
-    for (var v in org['memberResult']) {
+    for (var v in org['memberResults']) {
       memberResult.add(_createPlayerResult(v));
     }
     List<EnemyResult> enemyResults = [];
@@ -180,7 +137,9 @@ class DataConverter {
     return PlayerResult()
       ..player = _createPlayer(org['player'])
       ..weapons = weapons
-      ..specialWeapon = _createSpecialWeapon(org['specialWeapon'])
+      ..specialWeapon = org['specialWeapon'] == null
+          ? null
+          : _createSpecialWeapon(org['specialWeapon'])
       ..defeatEnemyCount = org['defeatEnemyCount']
       ..deliverCount = org['deliverCount']
       ..goldenAssistCount = org['goldenAssistCount']
@@ -216,7 +175,7 @@ class DataConverter {
     return Uniform()
       ..name = org['name']
       ..id = org['id']
-      ..image = _createUrl(org['image']);
+      ..image = _createImage(org['image']);
   }
 
   static Badge? _createBadge(Map<String, dynamic>? org) {
@@ -224,13 +183,13 @@ class DataConverter {
         ? null
         : (Badge()
           ..id = org['id']
-          ..image = _createUrl(org['url']));
+          ..image = _createImage(org['image']));
   }
 
   static Background _createBackground(Map<String, dynamic> org) {
     return Background()
       ..textColor = _createTextColor(org['textColor'])
-      ..url = _createUrl(org['url'])
+      ..image = _createImage(org['image'])
       ..id = org['id'];
   }
 
@@ -242,9 +201,9 @@ class DataConverter {
       ..r = org['r'];
   }
 
-  static Url _createUrl(Map<String, dynamic> org) {
+  static Image _createImage(Map<String, dynamic> org) {
     File file = File(org['url']);
-    return Url()..url = path.basename(file.path.split('?')[0]);
+    return Image()..url = path.basename(file.path.split('?')[0]);
   }
 
   static BossResult? _createBossResult(Map<String, dynamic>? org) {
@@ -259,14 +218,14 @@ class DataConverter {
     return Boss()
       ..id = org['id']
       ..name = org['name']
-      ..image = _createUrl(org['image']);
+      ..image = _createImage(org['image']);
   }
 
   static EnemyResult _createEnemyResult(Map<String, dynamic> org) {
     return EnemyResult()
-      ..defeatCount = org['']
-      ..teamDefeatCount = org['']
-      ..popCount = org['']
+      ..defeatCount = org['defeatCount']
+      ..teamDefeatCount = org['teamDefeatCount']
+      ..popCount = org['popCount']
       ..enemy = _createBoss(org['enemy']);
   }
 
@@ -274,7 +233,7 @@ class DataConverter {
     List<SpecialWeapon> specialWeapons = [];
     for (var v in org['specialWeapons']) {
       if (v != null) {
-        specialWeapons.add(v);
+        specialWeapons.add(_createSpecialWeapon(v));
       }
     }
 
@@ -300,17 +259,20 @@ class DataConverter {
     return CoopStage()
       ..id = org['id']
       ..name = org['name']
-      ..image = _createUrl(org['image']);
+      ..image = _createImage(org['image']);
   }
 
   static Weapon _createWeapon(Map<String, dynamic> org) {
     return Weapon()
       ..name = org['name']
-      ..image = _createUrl(org['image']);
+      ..image = _createImage(org['image']);
   }
 
-  static SpecialWeapon? _createSpecialWeapon(Map<String, dynamic> org) {
-    return null;
+  static SpecialWeapon _createSpecialWeapon(Map<String, dynamic> org) {
+    return SpecialWeapon()
+      ..name = org['name']
+      ..image = _createImage(org['image'])
+      ..id = org['id'];
   }
 
   static Scale? _createScale(Map<String, dynamic>? org) {

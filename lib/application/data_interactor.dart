@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:salmdroidnw2/util/converter.dart';
+import 'package:salmdroidnw2/util/converter/defeat_converter.dart';
+import 'package:salmdroidnw2/util/converter/king_defeat_converter.dart';
 
 import '../application/app_data_instractor.dart';
 import '../application/common_utility.dart';
@@ -273,15 +274,15 @@ class DataInteractor extends ChangeNotifier {
 
   Future<Defeat> loadDefeat() async {
     Log.i('loadDefeat()');
-    var rawdata =
-        await defeatRepository.getDefeat() ?? DataConverter.toDefeat(null);
+    var rawdata = await defeatRepository.getDefeat() ??
+        DefeatConverter.createEmptyDefeat();
     return rawdata;
   }
 
   Future<KingDefeat> loadKingDefeat() async {
     Log.i('loadKingDefeat()');
     var rawdata = await kingDefeatRepository.getKingDefeat() ??
-        DataConverter.toKingDefeat(null);
+        KingDefeatConverter.createEmptyKingDefeat();
     Log.i('loadKingDefeat() rawdata');
     return rawdata;
   }

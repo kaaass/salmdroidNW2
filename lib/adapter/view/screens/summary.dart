@@ -287,10 +287,10 @@ class _Summary extends State<Summary> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        Common.getImageGikura(),
-                        scale: 5.0,
-                      ),
+                      // Image.asset(
+                      //   Common.getImageGikura(),
+                      //   scale: 5.0,
+                      // ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(5, 0, 2, 0),
                           child: getText('x${getGoldenEgg(job)}')),
@@ -307,10 +307,10 @@ class _Summary extends State<Summary> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        Common.getImageIkura(),
-                        scale: 8.0,
-                      ),
+                      // Image.asset(
+                      //   Common.getImageIkura(),
+                      //   scale: 8.0,
+                      // ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(5, 0, 2, 0),
                           child: getText('x${getEgg(job)}')),
@@ -476,9 +476,10 @@ class _Summary extends State<Summary> {
                     ? SizedBox(
                         width: 25,
                         height: 25,
-                        child: Image.asset(
-                          Common.getOkashira(job.bossResult!.boss.id),
-                        ),
+                        child: Container()
+                        //  Image.asset(
+                        //   Common.getOkashira(job.bossResult!.boss.id),
+                        // ),
                       )
                     : Container(),
                 Row(

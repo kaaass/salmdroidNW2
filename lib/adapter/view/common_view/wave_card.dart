@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/image.dart' as materialImage;
 
 import '../../../adapter/view/common_view/widget_util.dart';
 import '../../../application/common_utility.dart';
@@ -191,7 +192,8 @@ class WaveCard {
                             alignment: Alignment.bottomCenter,
                             child: Opacity(
                               opacity: 0.5,
-                              child: Image.asset(Common.getWave()),
+                              child:
+                                  materialImage.Image.asset(Common.getWave()),
                             ),
                           ),
                         ),
@@ -228,7 +230,8 @@ class WaveCard {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(right: 5),
-                                  child: Image.asset(Common.getImageGikura(),
+                                  child: materialImage.Image.asset(
+                                      Common.getImageGikura(),
                                       scale: 5.0),
                                 ),
                                 WidgetUtil.createText('x$pop', 12),
@@ -288,7 +291,7 @@ class WaveCard {
                           alignment: Alignment.bottomCenter,
                           child: Opacity(
                             opacity: 0.5,
-                            child: Image.asset(Common.getWave()),
+                            child: materialImage.Image.asset(Common.getWave()),
                           ),
                         ),
                       ),
