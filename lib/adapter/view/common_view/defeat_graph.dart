@@ -7,8 +7,12 @@ import '../../../domain/salmonrun_data/common.dart';
 import '../../view/common_view/widget_util.dart';
 
 class DefeatGraph {
+  static final double _textSize = 10;
+  static BuildContext? _context;
+
   static Widget createDefeatChart(BuildContext context, Map<String, int> defs,
       double rate, Widget Function(double, TitleMeta)? f) {
+    _context = context;
     List<BarChartGroupData> datalist = [];
     int count = 0;
     int maxVal = 0;
@@ -117,10 +121,7 @@ class DefeatGraph {
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child: Image.asset(
-        Common.getOomono(bossList[n]),
-        scale: 5,
-      ),
+      child: WidgetUtil.createText(Common.getSalmonidsName(_context, n), _textSize),
     );
   }
 
@@ -135,10 +136,7 @@ class DefeatGraph {
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child: Image.asset(
-        Common.getOkashira(bossList[n]),
-        scale: 5,
-      ),
+      child: WidgetUtil.createText(Common.getSalmonidsName(_context, n), _textSize),
     );
   }
 }

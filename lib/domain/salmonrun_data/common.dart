@@ -501,6 +501,60 @@ class Common {
     }
   }
 
+  static String getSalmonidsName(BuildContext? context, int n) {
+    if (context == null) {
+      return '';
+    }
+
+    switch (n) {
+      case 0:
+        return L10n.of(context)!.steelHead;
+      case 1:
+        return L10n.of(context)!.flyFish;
+      case 2:
+        return L10n.of(context)!.steelEel;
+      case 3:
+        return L10n.of(context)!.stinger;
+      case 4:
+        return L10n.of(context)!.maws;
+      case 5:
+        return L10n.of(context)!.drizzler;
+      case 6:
+        return L10n.of(context)!.scrapper;
+      case 7:
+        return L10n.of(context)!.fishStick;
+      case 8:
+        return L10n.of(context)!.flipperFlopper;
+      case 9:
+        return L10n.of(context)!.bigShot;
+      case 10:
+        return L10n.of(context)!.slamminLid;
+      case 11:
+        return L10n.of(context)!.griller;
+      case 12:
+        return L10n.of(context)!.goldie;
+      case 13:
+        return L10n.of(context)!.mudmouth;
+      default:
+        return '';
+    }
+  }
+
+  static String getKingSalmonidsName(BuildContext? context, int n) {
+    if (context == null) {
+      return '';
+    }
+
+    switch (n) {
+      case 0:
+        return L10n.of(context)!.cohozuna;
+      case 1:
+        return L10n.of(context)!.horroboros;
+      default:
+        return '';
+    }
+  }
+
   static String getEggVPGrade() {
     return 'Q29vcEdyYWRlLTg=';
   }

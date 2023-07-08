@@ -305,8 +305,8 @@ class DataInteractor extends ChangeNotifier {
   }
 
   Future<void> calc(Stream stream) async {
-    _defeatInfo = Defeat();
-    _kingDefeatInfo = KingDefeat();
+    _defeatInfo = DefeatConverter.createEmptyDefeat();
+    _kingDefeatInfo = KingDefeatConverter.createEmptyKingDefeat();
     isUpdating = true;
 
     await for (CoopHistoryDetail history in stream) {
