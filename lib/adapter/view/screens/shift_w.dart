@@ -99,7 +99,7 @@ class _Shift extends State<ShiftW> {
         title: barTitle,
         toolbarHeight: 45,
       ),
-      endDrawer: _buildDrawer(),
+//      endDrawer: _buildDrawer(),
       body: FutureBuilder(
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -136,13 +136,14 @@ class _Shift extends State<ShiftW> {
               _mapIsShowStage[key] = !(_mapIsShowStage[key] ?? true);
               setState(() {});
             },
-            child: Image.asset(
-              Common.getImageStage(key),
-              width: drawerWidth * 0.4,
-              color: (_mapIsShowStage[key] ?? false) ? null : Colors.white,
-              colorBlendMode:
-                  (_mapIsShowStage[key] ?? false) ? null : BlendMode.saturation,
-            ),
+            child: Container()
+            //  Image.asset(
+            //   Common.getImageStage(key),
+            //   width: drawerWidth * 0.4,
+            //   color: (_mapIsShowStage[key] ?? false) ? null : Colors.white,
+            //   colorBlendMode:
+            //       (_mapIsShowStage[key] ?? false) ? null : BlendMode.saturation,
+            // ),
           )
         ],
       ));
@@ -366,7 +367,7 @@ class _Shift extends State<ShiftW> {
     List<Widget> weaponList = [];
     double imageHeight = 65;
     for (var w in m.weapons) {
-      weaponList.add(WidgetUtil.createWeaponImage(w, unitWidth * 0.25, true));
+//      weaponList.add(WidgetUtil.createWeaponImage(w, unitWidth * 0.25, true));
     }
 
     Widget detailWidget;
@@ -394,8 +395,9 @@ class _Shift extends State<ShiftW> {
             ),
             child: SizedBox(
               width: unitWidth * 0.25,
-              child: Image.asset(Common.getOkashira(m.kingSalmonids),
-                  color: kingColor),
+              child: Container()
+              //  Image.asset(Common.getOkashira(m.kingSalmonids),
+              //     color: kingColor),
             ),
           )
         : Container();
@@ -409,11 +411,12 @@ class _Shift extends State<ShiftW> {
             children: [
               SizedBox(
                 width: unitWidth,
-                child: Image.asset(
-                  Common.getImageStage(m.stageId),
-                  height: imageHeight,
-                  fit: BoxFit.fitWidth,
-                ),
+                child: Container()
+                //  Image.asset(
+                //   Common.getImageStage(m.stageId),
+                //   height: imageHeight,
+                //   fit: BoxFit.fitWidth,
+                // ),
               ),
               SizedBox(
                 width: unitWidth,
@@ -493,10 +496,11 @@ class _Shift extends State<ShiftW> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 2, right: 5),
-                  child: Image.asset(
-                    Common.getImageGikura(),
-                    scale: 5.0,
-                  ),
+                  child: Container()
+                  //  Image.asset(
+                  //   Common.getImageGikura(),
+                  //   scale: 5.0,
+                  // ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8),

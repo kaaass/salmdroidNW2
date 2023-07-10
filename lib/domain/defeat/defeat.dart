@@ -20,7 +20,7 @@ class Defeat {
   late int coopEnemy13;
   late int coopEnemy14;
 
-  Map<String, int> createInitMap() {
+  static Map<String, int> createInitMap() {
     Map<String, int> ret = {};
     ret['coopEnemy4'] = 0;
     ret['coopEnemy5'] = 0;
