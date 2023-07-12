@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter/src/widgets/image.dart' as materialImage;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/image.dart' as materialImage;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -51,7 +51,7 @@ class _Detail extends State<Detail> {
 
   void _loadDetail(String id) {
     for (CoopHistoryDetail h in widget.details) {
-      if (h.id == id) {
+      if (h.historyId == id) {
         _detail = h;
         break;
       }
@@ -402,10 +402,10 @@ class _Detail extends State<Detail> {
             children: [
               Row(
                 children: [
-                  materialImage.Image.asset(
-                    Common.getImageGikura(),
-                    scale: 4.5,
-                  ),
+                  // materialImage.Image.asset(
+                  //   Common.getImageGikura(),
+                  //   scale: 4.5,
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: Text('x$gikura'),
@@ -416,10 +416,10 @@ class _Detail extends State<Detail> {
                 padding: const EdgeInsets.only(left: 15),
                 child: Row(
                   children: [
-                    materialImage.Image.asset(
-                      Common.getImageIkura(),
-                      scale: 8,
-                    ),
+                    // materialImage.Image.asset(
+                    //   Common.getImageIkura(),
+                    //   scale: 8,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: Text('x$ikura'),
@@ -437,7 +437,8 @@ class _Detail extends State<Detail> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    materialImage.Image.asset(Common.getImageScaleBronze(), width: width),
+                    // materialImage.Image.asset(Common.getImageScaleBronze(),
+                    //     width: width),
                     Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: WidgetUtil.createText(
@@ -456,7 +457,8 @@ class _Detail extends State<Detail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      materialImage.Image.asset(Common.getImageScaleSilver(), width: width),
+                      // materialImage.Image.asset(Common.getImageScaleSilver(),
+                      //     width: width),
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: WidgetUtil.createText(
@@ -476,7 +478,8 @@ class _Detail extends State<Detail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      materialImage.Image.asset(Common.getImageScaleGold(), width: width),
+                      // materialImage.Image.asset(Common.getImageScaleGold(),
+                      //     width: width),
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: WidgetUtil.createText(
@@ -498,22 +501,22 @@ class _Detail extends State<Detail> {
 
   Widget createPieGraph(int type) {
     List<PieChartSectionData> sections;
-    String uri;
+    String uri = '';
     double sc;
     switch (type) {
       case 1:
         sections = createGikuraSections();
-        uri = Common.getImageGikura();
+        // uri = Common.getImageGikura();
         sc = 3.5;
         break;
       case 2:
         sections = createIkuraSections();
-        uri = Common.getImageIkura();
+        // uri = Common.getImageIkura();
         sc = 6.0;
         break;
       case 3:
         sections = createOomonoSections();
-        uri = Common.getSakelienGolden();
+        // uri = Common.getSakelienGolden();
         sc = 14.0;
         break;
       default:
@@ -534,9 +537,9 @@ class _Detail extends State<Detail> {
                 centerSpaceRadius: 15,
                 sections: sections),
           ),
-          Center(
-            child: materialImage.Image.asset(uri, scale: sc),
-          ),
+          // Center(
+          //   child: materialImage.Image.asset(uri, scale: sc),
+          // ),
         ],
       ),
     );
@@ -797,7 +800,8 @@ class _Detail extends State<Detail> {
                             alignment: Alignment.bottomCenter,
                             child: Opacity(
                               opacity: 0.5,
-                              child: materialImage.Image.asset(Common.getWave()),
+                              child:
+                                  Container(), //materialImage.Image.asset(Common.getWave()),
                             ),
                           ),
                         ),
@@ -912,10 +916,10 @@ class _Detail extends State<Detail> {
   Widget createPlayerResult(PlayerResult p, Color c, double wid,
       {bool isHideName = false}) {
     String name = isHideName ? '' : p.player.name;
-    String sp = p.specialWeapon!.image.url;
+//    String sp = p.specialWeapon!.image.url;
     List<String> weapons = [];
     for (var v in p.weapons) {
-      weapons.add(v.image.url);
+      // weapons.add(v.image.url);
     }
     List<Widget> weaponSpList = [];
     double unitWidth = min((MediaQuery.of(context).size.width) / 2.5 / 5, 32);
@@ -927,9 +931,9 @@ class _Detail extends State<Detail> {
         break;
     }
     for (var v in weapons) {
-      weaponSpList.add(Padding(
-          padding: const EdgeInsets.only(right: 2),
-          child: WidgetUtil.createWeaponImage(v, unitWidth, true)));
+      // weaponSpList.add(Padding(
+      //     padding: const EdgeInsets.only(right: 2),
+      //     child: WidgetUtil.createWeaponImage(v, unitWidth, true)));
     }
     String dead = p.rescuedCount.toString();
     String rescue = p.rescueCount.toString();
@@ -959,7 +963,7 @@ class _Detail extends State<Detail> {
                       Padding(
                         padding: const EdgeInsets.only(top: 25, right: 10),
                         child:
-                            WidgetUtil.createSpecialImage(sp, unitWidth, true),
+                            Container(), //WidgetUtil.createSpecialImage(sp, unitWidth, true),
                       ),
                     ],
                   ),
@@ -1011,21 +1015,21 @@ class _Detail extends State<Detail> {
   Widget createDetailCard(int type, String num, [String? sub]) {
     String uri = '';
     double sc = 6.0;
-    switch (type) {
-      case 1:
-        uri = Common.getImageGikura();
-        break;
-      case 2:
-        uri = Common.getImageIkura();
-        sc = 10.0;
-        break;
-      case 3:
-        uri = Common.getImageRescue();
-        break;
-      case 4:
-        uri = Common.getImageDead();
-        break;
-    }
+    // switch (type) {
+    //   case 1:
+    //     uri = Common.getImageGikura();
+    //     break;
+    //   case 2:
+    //     uri = Common.getImageIkura();
+    //     sc = 10.0;
+    //     break;
+    //   case 3:
+    //     uri = Common.getImageRescue();
+    //     break;
+    //   case 4:
+    //     uri = Common.getImageDead();
+    //     break;
+    // }
 
     return SizedBox(
         width: 55,
@@ -1034,12 +1038,12 @@ class _Detail extends State<Detail> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Stack(children: [
-                  materialImage.Image.asset(
-                    uri,
-                    scale: sc,
-                    // colorBlendMode: BlendMode.modulate,
-                  )
+                Stack(children: const [
+                  // materialImage.Image.asset(
+                  //   uri,
+                  //   scale: sc,
+                  //   // colorBlendMode: BlendMode.modulate,
+                  // )
                 ]),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -1127,14 +1131,15 @@ class _Detail extends State<Detail> {
 
     int n = value.toInt();
     return SideTitleWidget(
-        axisSide: meta.axisSide,
-        space: 2,
-        child: RotatedBox(
-            quarterTurns: -1,
-            child: materialImage.Image.asset(
-              Common.getOomono(bossList[n]),
-              scale: 5,
-            )));
+      axisSide: meta.axisSide,
+      space: 2,
+      child: RotatedBox(quarterTurns: -1, child: Container()
+          //  materialImage.Image.asset(
+          //   Common.getOomono(bossList[n]),
+          //   scale: 5,
+          // ),
+          ),
+    );
   }
 
   List<BarChartGroupData> getData(List<Map<String, int>> list) {

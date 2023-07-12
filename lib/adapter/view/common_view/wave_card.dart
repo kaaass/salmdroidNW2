@@ -192,8 +192,8 @@ class WaveCard {
                             alignment: Alignment.bottomCenter,
                             child: Opacity(
                               opacity: 0.5,
-                              child:
-                                  materialImage.Image.asset(Common.getWave()),
+                              child: Container(),
+                                  // materialImage.Image.asset(Common.getWave()),
                             ),
                           ),
                         ),
@@ -230,9 +230,10 @@ class WaveCard {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(right: 5),
-                                  child: materialImage.Image.asset(
-                                      Common.getImageGikura(),
-                                      scale: 5.0),
+                                  child: Container()
+                                  //  materialImage.Image.asset(
+                                  //     Common.getImageGikura(),
+                                  //     scale: 5.0),
                                 ),
                                 WidgetUtil.createText('x$pop', 12),
                               ],
@@ -291,7 +292,7 @@ class WaveCard {
                           alignment: Alignment.bottomCenter,
                           child: Opacity(
                             opacity: 0.5,
-                            child: materialImage.Image.asset(Common.getWave()),
+                            child: Container(), // materialImage.Image.asset(Common.getWave()),
                           ),
                         ),
                       ),

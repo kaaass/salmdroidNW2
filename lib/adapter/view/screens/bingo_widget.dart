@@ -105,10 +105,11 @@ class _BingoWidget extends State<BingoWidget> {
           height: size,
           child: SimpleDialogOption(
             padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-            child: Image.asset(
-              Common.getImageWeapon(key),
-              color: _isSelectedWeapon(key) ? Colors.black : null,
-            ),
+            child: Container(),
+            // Image.asset(
+            //   Common.getImageWeapon(key),
+            //   color: _isSelectedWeapon(key) ? Colors.black : null,
+            // ),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop(key);
             },
@@ -150,7 +151,8 @@ class _BingoWidget extends State<BingoWidget> {
         if (i == (_size / 2).floor() && j == (_size / 2).floor()) {
           child = Image.asset(Common.getKumasan());
         } else if (weaponList[i][j].select != null) {
-          child = Image.asset(Common.getImageWeapon(weaponList[i][j].select!));
+          child =
+              Container(); //Image.asset(Common.getImageWeapon(weaponList[i][j].select!));
         } else {
           child = Center(
             child: Text(L10n.of(context)!.bingoTapHere,

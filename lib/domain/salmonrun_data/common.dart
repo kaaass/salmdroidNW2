@@ -428,55 +428,6 @@ class Common {
     }
   }
 
-  static String getImageSpecialFromId(String id) {
-    String filename = specialList[id]!;
-    return '$_preSpecial$filename';
-  }
-
-  static String getImageSpecial(String file) {
-    return '$_preSpecial$file';
-  }
-
-  static String getImageStage(String id) {
-    if (stageList.containsKey(id)) {
-      return '$_preStage${stageList[id]}';
-    } else {
-      return '$_preStage$_unknownStage';
-    }
-  }
-
-  static String getImageWeapon(String idstr) {
-    if (weaponMap.containsKey(idstr)) {
-      return '$_preWeapon$idstr';
-    }
-    if (grizzcoWeaponMap.containsKey(idstr)) {
-      return '$_preWeapon$idstr';
-    }
-    if (goldenRandomWeapon == idstr) {
-      return '$_preWeapon$idstr';
-    }
-    return '$_preWeapon$randomWeapon';
-  }
-
-  static String getOomono(String id) {
-    String? filename = bossList[id];
-    if (filename == null) {
-      throw Exception('Invalid boss id.');
-    }
-    return '$_preOomono$filename';
-  }
-
-  static String getSakelienGolden() {
-    return getOomono('Q29vcEVuZW15LTE1');
-  }
-
-  static String getOkashira(String id) {
-    if (okashiraList.containsKey(id)) {
-      return '$_preOomono${okashiraList[id]}';
-    }
-    return '$_preWeapon$randomWeapon';
-  }
-
   static String getGrade(var context, String id) {
     if (id.isEmpty) {
       return '-';
@@ -564,59 +515,59 @@ class Common {
     return 'Q29vcEdyYWRlLTg=';
   }
 
-  static String getImageGikura() {
-    return _preBundle + bundles['gikura']!;
-  }
-
-  static String getImageIkura() {
-    return _preBundle + bundles['ikura']!;
-  }
-
-  static String getImageDead() {
-    return _preBundle + bundles['dead']!;
-  }
-
-  static String getImageRescue() {
-    return _preBundle + bundles['rescue']!;
-  }
-
-  static String getImageGradeUp() {
-    return _preBundle + bundles['gradeup']!;
-  }
-
-  static String getImageGradeEven() {
-    return _preBundle + bundles['gradeeven']!;
-  }
-
-  static String getImageGradeDown() {
-    return _preBundle + bundles['gradedown']!;
-  }
-
-  static String getImageWave() {
-    return _preBundle + bundles['wave']!;
-  }
-
-  static String getImageScaleGold() {
-    return _preScale + scale['gold']!;
-  }
-
-  static String getImageScaleSilver() {
-    return _preScale + scale['silver']!;
-  }
-
-  static String getImageScaleBronze() {
-    return _preScale + scale['bronze']!;
-  }
-
-  // static Future<String> getExternalStoragePath() async {
-  //   final path = await ExternalPath.getExternalStoragePublicDirectory(
-  //       ExternalPath.DIRECTORY_DOWNLOADS);
-  //   return path;
+  // static String getImageGikura() {
+  //   return _preBundle + bundles['gikura']!;
   // }
 
-  static String getWave() {
-    return _preBundle + bundles['wave']!;
-  }
+  // static String getImageIkura() {
+  //   return _preBundle + bundles['ikura']!;
+  // }
+
+  // static String getImageDead() {
+  //   return _preBundle + bundles['dead']!;
+  // }
+
+  // static String getImageRescue() {
+  //   return _preBundle + bundles['rescue']!;
+  // }
+
+  // static String getImageGradeUp() {
+  //   return _preBundle + bundles['gradeup']!;
+  // }
+
+  // static String getImageGradeEven() {
+  //   return _preBundle + bundles['gradeeven']!;
+  // }
+
+  // static String getImageGradeDown() {
+  //   return _preBundle + bundles['gradedown']!;
+  // }
+
+  // static String getImageWave() {
+  //   return _preBundle + bundles['wave']!;
+  // }
+
+  // static String getImageScaleGold() {
+  //   return _preScale + scale['gold']!;
+  // }
+
+  // static String getImageScaleSilver() {
+  //   return _preScale + scale['silver']!;
+  // }
+
+  // static String getImageScaleBronze() {
+  //   return _preScale + scale['bronze']!;
+  // }
+
+  // // static Future<String> getExternalStoragePath() async {
+  // //   final path = await ExternalPath.getExternalStoragePublicDirectory(
+  // //       ExternalPath.DIRECTORY_DOWNLOADS);
+  // //   return path;
+  // // }
+
+  // static String getWave() {
+  //   return _preBundle + bundles['wave']!;
+  // }
 
   static bool isRegularStage(String id) {
     String decoded = _decodeBase64(id);

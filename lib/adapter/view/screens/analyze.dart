@@ -236,9 +236,7 @@ class _Analyze extends State<Analyze> {
                       padding: const EdgeInsets.only(right: 10),
                       child: SizedBox(
                         width: imageBlockWidth,
-                        child: materialImage.Image.asset(
-                          Common.getImageStage(id),
-                        ),
+                        child: Container(),
                       ),
                     ),
                     Column(

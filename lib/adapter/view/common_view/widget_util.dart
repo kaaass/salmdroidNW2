@@ -33,9 +33,8 @@ class WidgetUtil {
 
   static Widget _createCard(List<String> weapons, String stageId, String str) {
     List<Widget> weaponList = [];
-    String stage = Common.getImageStage(stageId);
     for (var w in weapons) {
-      weaponList.add(createWeaponImage(w, 35, true));
+//      weaponList.add(createWeaponImage(w, 35, true));
     }
 
     return Container(
@@ -48,20 +47,6 @@ class WidgetUtil {
         height: 80,
         child: Stack(
           children: [
-            stage.isNotEmpty
-                ? Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fitWidth,
-                          colorFilter: weaponList.length == 4
-                              ? const ColorFilter.mode(
-                                  Colors.transparent, BlendMode.color)
-                              : const ColorFilter.mode(
-                                  Colors.black, BlendMode.color),
-                          image: AssetImage(Common.getImageStage(stageId))),
-                    ),
-                  )
-                : Container(),
             Padding(
               padding: const EdgeInsets.only(top: 40, right: 2, bottom: 2),
               child: Row(
@@ -123,17 +108,9 @@ class WidgetUtil {
         ? Card(
             color: isBackgroud ? Colors.black : null,
             margin: const EdgeInsets.all(0),
-            child: Image.asset(
-              Common.getImageWeapon(w),
-              width: size,
-              height: size,
-            ),
+            child: Container(),
           )
-        : Image.asset(
-            Common.getImageWeapon(w),
-            width: size,
-            height: size,
-          );
+        : Container();
   }
 
   static Widget createSpecialImageFromId(String id, double size,
@@ -142,17 +119,9 @@ class WidgetUtil {
         ? Card(
             color: Colors.black,
             margin: const EdgeInsets.all(0),
-            child: Image.asset(
-              Common.getImageSpecialFromId(id),
-              width: size,
-              height: size,
-            ),
+            child: Container(),
           )
-        : Image.asset(
-            Common.getImageSpecialFromId(id),
-            width: size,
-            height: size,
-          );
+        : Container();
   }
 
   static Widget createSpecialImage(String sp, double size,
@@ -161,17 +130,9 @@ class WidgetUtil {
         ? Card(
             color: isBackgroud ? Colors.black : null,
             margin: const EdgeInsets.all(0),
-            child: Image.asset(
-              Common.getImageSpecial(sp),
-              width: size,
-              height: size,
-            ),
+            child: Container(),
           )
-        : Image.asset(
-            Common.getImageSpecial(sp),
-            width: size,
-            height: size,
-          );
+        : Container();
   }
 
   static Widget createDivider() {

@@ -180,7 +180,7 @@ class _Summary extends State<Summary> {
 
   Future<void> getResults() async {
     Log.i('_detail.length: ${_details.length}');
-    _detailSummary = [_ad];
+    _detailSummary = [];
     _idList = [];
     for (var detail in _details) {
       _idList.add(detail.historyId);
@@ -321,8 +321,10 @@ class _Summary extends State<Summary> {
                     ? Container(width: screenSize.width * 0.1)
                     : SizedBox(
                         width: screenSize.width * 0.1,
-                        child: WidgetUtil.createSpecialImage(
-                            job.myResult.specialWeapon!.image.url, 20, true)),
+                        child: Container(),
+                        // WidgetUtil.createSpecialImage(
+                        //     job.myResult.specialWeapon!.image.url, 20, true)
+                      ),
               ],
             ),
           ],
@@ -448,7 +450,7 @@ class _Summary extends State<Summary> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             createQuota(isClear, job.waveResults[wave].teamDeliverCount,
                 job.waveResults[wave].deliverNorm),
-            WidgetUtil.createWeaponImage(weaponid, 25),
+            // WidgetUtil.createWeaponImage(weaponid, 25),
           ]),
           createTideEvent(
               job.waveResults[wave].waterLevel, job.waveResults[wave].eventWave)
@@ -473,14 +475,11 @@ class _Summary extends State<Summary> {
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Column(children: [
                 job.bossResult != null
-                    ? SizedBox(
-                        width: 25,
-                        height: 25,
-                        child: Container()
+                    ? SizedBox(width: 25, height: 25, child: Container()
                         //  Image.asset(
                         //   Common.getOkashira(job.bossResult!.boss.id),
                         // ),
-                      )
+                        )
                     : Container(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

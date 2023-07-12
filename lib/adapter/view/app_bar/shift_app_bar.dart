@@ -43,22 +43,22 @@ class ShiftAppBar {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Image.asset(
-              Common.getImageStage(s.stageId),
-              height: 45,
-            ),
-            Row(
-              children: [
-                WidgetUtil.createWeaponImage(
-                    s.weapons[0], weaponImageSize, true),
-                WidgetUtil.createWeaponImage(
-                    s.weapons[1], weaponImageSize, true),
-                WidgetUtil.createWeaponImage(
-                    s.weapons[2], weaponImageSize, true),
-                WidgetUtil.createWeaponImage(
-                    s.weapons[3], weaponImageSize, true),
-              ],
-            ),
+            // Image.asset(
+            //   Common.getImageStage(s.stageId),
+            //   height: 45,
+            // ),
+            // Row(
+            //   children: [
+            //     WidgetUtil.createWeaponImage(
+            //         s.weapons[0], weaponImageSize, true),
+            //     WidgetUtil.createWeaponImage(
+            //         s.weapons[1], weaponImageSize, true),
+            //     WidgetUtil.createWeaponImage(
+            //         s.weapons[2], weaponImageSize, true),
+            //     WidgetUtil.createWeaponImage(
+            //         s.weapons[3], weaponImageSize, true),
+            //   ],
+            // ),
           ],
         ),
         Text(
