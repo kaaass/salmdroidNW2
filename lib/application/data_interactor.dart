@@ -13,6 +13,7 @@ import '../application/interface/i_shift_repository.dart';
 import '../domain/coop_history_detail/coop_history_detail.dart';
 import '../domain/defeat/defeat.dart';
 import '../domain/king_defeat/king_defeat.dart';
+import '../domain/salmonrun_data/common.dart';
 import '../domain/shift/shift.dart';
 import '../domain/state/data_state.dart';
 import '../util/log.dart';
@@ -263,6 +264,7 @@ class DataInteractor extends ChangeNotifier {
     Log.i('loadDefeat()');
     var rawdata = await defeatRepository.getDefeat() ??
         DefeatConverter.createEmptyDefeat();
+    Log.i('loadDefeat() rawdata: ${rawdata.id}');
     return rawdata;
   }
 
@@ -270,7 +272,7 @@ class DataInteractor extends ChangeNotifier {
     Log.i('loadKingDefeat()');
     var rawdata = await kingDefeatRepository.getKingDefeat() ??
         KingDefeatConverter.createEmptyKingDefeat();
-    Log.i('loadKingDefeat() rawdata');
+    Log.i('loadKingDefeat() rawdata: ${rawdata.id}');
     return rawdata;
   }
 
@@ -305,11 +307,11 @@ class DataInteractor extends ChangeNotifier {
 
   void fix() {
     if (_defeatInfo != null) {
-//      Log.i('fix: ${_defeatInfo!.toMap()}');
+      Log.i('fix: ${_defeatInfo!.id}');
       defeatRepository.insert(_defeatInfo!);
     }
     if (_kingDefeatInfo != null) {
-//      Log.i('fix: ${_kingDefeatInfo!.toMap()}');
+      Log.i('fix: ${_kingDefeatInfo!.id}');
       kingDefeatRepository.insert(_kingDefeatInfo!);
     }
     isUpdating = false;
@@ -340,8 +342,8 @@ class DataInteractor extends ChangeNotifier {
           KingDefeatConverter.createMapFromData(_kingDefeatInfo!);
       if (history.bossResult != null) {
         if (history.bossResult!.hasDefeatBoss) {
-          kingDefeatMap[history.bossResult!.boss.id] =
-              (kingDefeatMap[history.bossResult!.boss.id] ?? 0) + 1;
+          String key = Common.getBossIdToIdxName(history.bossResult!.boss.id);
+          kingDefeatMap[key] = (kingDefeatMap[key] ?? 0) + 1;
         }
       }
 
@@ -359,7 +361,8 @@ class DataInteractor extends ChangeNotifier {
   Map<String, int> _getDefeatalmonids(CoopHistoryDetail detail) {
     Map<String, int> map = Defeat.createInitMap();
     for (var enemy in detail.enemyResults) {
-      map[enemy.enemy.id] = enemy.defeatCount;
+      String key = Common.getBossIdToIdxName(enemy.enemy.id);
+      map[key] = enemy.defeatCount;
     }
     return map;
   }

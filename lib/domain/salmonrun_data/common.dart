@@ -366,6 +366,11 @@ class Common {
     return list;
   }
 
+  static String getBossIdToIdxName(String base) {
+    String decoded = _decodeBase64(base);
+    return decoded.replaceAll(RegExp(r'CoopEnemy-'), 'coopEnemy');
+  }
+
   static List<String> getSpecialWeaponList() {
     List<String> list = [];
     specialIdMap.forEach((key, value) {
@@ -512,15 +517,15 @@ class Common {
       case 1:
         return L10n.of(context)!.flyFish;
       case 2:
-        return L10n.of(context)!.steelEel;
-      case 3:
-        return L10n.of(context)!.stinger;
-      case 4:
-        return L10n.of(context)!.maws;
-      case 5:
-        return L10n.of(context)!.drizzler;
-      case 6:
         return L10n.of(context)!.scrapper;
+      case 3:
+        return L10n.of(context)!.steelEel;
+      case 4:
+        return L10n.of(context)!.stinger;
+      case 5:
+        return L10n.of(context)!.maws;
+      case 6:
+        return L10n.of(context)!.drizzler;
       case 7:
         return L10n.of(context)!.fishStick;
       case 8:

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:salmdroidnw2/util/converter/defeat_converter.dart';
+import 'package:salmdroidnw2/util/converter/king_defeat_converter.dart';
 
 import '../../../adapter/view/common_view/defeat_graph.dart';
 import '../../../adapter/view/common_view/widget_util.dart';
@@ -116,16 +118,10 @@ class _Profile extends State<Profile> {
     return FutureBuilder(
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (_defeat != null && _kingDefeat != null) {
-          Map<String, int> defeatMap = {};
-          // _defeat!.defeatMap.forEach(
-          //   (key, value) {
-          //     if (key != 'Q29vcEVuZW15LTE1' &&
-          //         key != 'Q29vcEVuZW15LTE3' &&
-          //         key != 'Q29vcEVuZW15LTIw') {
-          //       defeatMap[key] = value;
-          //     }
-          //   },
-          // );
+          Map<String, int> defeatMap =
+              DefeatConverter.getOnlySamonidsMap(_defeat!);
+          Map<String, int> kingDefeatMap =
+              KingDefeatConverter.getOnlySamonidsMap(_kingDefeat!);
           return Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(
@@ -179,11 +175,7 @@ class _Profile extends State<Profile> {
                     ),
                   ),
                   SizedBox(height: 20, child: Container()),
-                  DefeatGraph.createDefeatChart(
-                      context,
-//                      _kingDefeat!.defeatMap,
-                      {},
-                      1,
+                  DefeatGraph.createDefeatChart(context, kingDefeatMap, 1,
                       DefeatGraph.getBottomAxWidgetForKing),
                 ],
               ),

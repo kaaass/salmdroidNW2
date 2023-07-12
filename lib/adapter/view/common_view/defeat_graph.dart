@@ -136,7 +136,7 @@ class DefeatGraph {
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child: WidgetUtil.createText(Common.getSalmonidsName(_context, n), _textSize),
+      child: WidgetUtil.createText(Common.getKingSalmonidsName(_context, n), _textSize),
     );
   }
 }

@@ -20,7 +20,7 @@ class DefeatRepository extends IDefeatRepository {
 
   @override
   Future<void> insert(Defeat data) async {
-    await insertAll([data]);
+    insertAll([data]);
   }
 
   @override
