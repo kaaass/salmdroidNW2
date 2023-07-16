@@ -114,6 +114,16 @@
   "spSkewerCoop": "Reefslider",
   "spTripleTornadoCoop": "Triple Inkstrike",
 
+  "stageSockeye" : "Sockeye Station",
+  "stageHydroplant" : "Gone Fission Hydroplant",
+  "stageSpawning" : "Spawning Grounds",
+  "stageMarooners" : "Marooner's Bay",
+  "stageJammin" : "Jammin' Salmon Junction",
+
+  "stageWahoo": "Wahoo World",
+  "stageAcademy": "Inkblot Art Academy",
+  "stageUndertow": "Undertow Spillway",
+
   "tokenProgress": "Token",
   "resultProgress": "Results",
   "finishGetResult": "Finish.",

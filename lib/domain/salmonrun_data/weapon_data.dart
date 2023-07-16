@@ -1,5 +1,5 @@
-class Weapon {
-  static const Map<String, int> weaponMap = {
+class WeaponData {
+  static const Map<String, int> idMap = {
     '6e58a0747ab899badcb6f351512c6034e0a49bd6453281f32c7f550a2132fd65_0.png':
         0, //ボールドマーカー,
     '8e134a80cd54f4235329493afd43ff754b367a65e460facfcca862b174754b0e_0.png':
@@ -114,7 +114,7 @@ class Weapon {
         8010, //ドライブワイパー,
   };
 
-  static const Map<String, int> grizzcoWeaponMap = {
+  static const Map<String, int> grizzcoIdMap = {
     '0962405d6aecff4a075c46e895c42984e33b26c4b2b4b25c5058366db3c35ba4_0.png':
         20900, // blaster
     '5cc158250a207241f51d767a47bbb6139fe1c4fb652cc182b73aac93baa659c5_0.png':
@@ -125,6 +125,8 @@ class Weapon {
         26900, // shelter
     '36e03d8d1e6bc4f7449c5450f4410c6c8449cde0548797d22ab641cd488d2060_0.png':
         27900, // stringer
+    '480bc1dfb0beed1ce4625a6a6b035e4bac711de019bb9b0e5125e4e7e39e0719_0.png':
+        28900, // saver
   };
 
   static const String randomWeapon =

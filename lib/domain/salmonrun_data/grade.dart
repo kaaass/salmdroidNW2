@@ -1,32 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 class Grade {
-  static String getGrade(BuildContext context, String id) {
-    if (id.isNotEmpty) {
-      switch (id) {
-        case 'Q29vcEdyYWRlLTA=': // CoopGrade-0
-          return L10n.of(context)!.apprentice;
-        case 'Q29vcEdyYWRlLTE=': // CoopGrade-1
-          return L10n.of(context)!.partTimer;
-        case 'Q29vcEdyYWRlLTI=': // CoopGrade-2
-          return L10n.of(context)!.goGetter;
-        case 'Q29vcEdyYWRlLTM=': // CoopGrade-3
-          return L10n.of(context)!.overachiever;
-        case 'Q29vcEdyYWRlLTQ=': // CoopGrade-4
-          return L10n.of(context)!.professionalPartTimer;
-        case 'Q29vcEdyYWRlLTU=': // CoopGrade-5
-          return L10n.of(context)!.professional1;
-        case 'Q29vcEdyYWRlLTY=': // CoopGrade-6
-          return L10n.of(context)!.professional2;
-        case 'Q29vcEdyYWRlLTc=': // CoopGrade-7
-          return L10n.of(context)!.professional3;
-        case 'Q29vcEdyYWRlLTg=': // CoopGrade-8
-          return L10n.of(context)!.eggsecutive;
-        default:
-          break;
-      }
-    }
-    return '';
-  }
+  static const Map<String, int> idMap = {
+    'Q29vcEdyYWRlLTA=': 0, // CoopGrade-0
+    'Q29vcEdyYWRlLTE=': 1, // CoopGrade-1
+    'Q29vcEdyYWRlLTI=': 2, // CoopGrade-2
+    'Q29vcEdyYWRlLTM=': 3, // CoopGrade-3
+    'Q29vcEdyYWRlLTQ=': 4, // CoopGrade-4
+    'Q29vcEdyYWRlLTU=': 5, // CoopGrade-5
+    'Q29vcEdyYWRlLTY=': 6, // CoopGrade-6
+    'Q29vcEdyYWRlLTc=': 7, // CoopGrade-7
+    'Q29vcEdyYWRlLTg=': 8, // CoopGrade-8
+  };
 }

@@ -114,6 +114,16 @@
   "spSkewerCoop": "鲨鱼坐骑",
   "spTripleTornadoCoop": "三重龙卷风",
 
+  "stageSockeye" : "新卷堡",
+  "stageHydroplant" : "麦年海洋发电所",
+  "stageSpawning" : "鲑坝",
+  "stageMarooners" : "漂浮落难船",
+  "stageJammin" : "生筋子系统交流道遗址",
+
+  "stageWahoo": "醋饭海洋世界",
+  "stageAcademy": "海女美术大学",
+  "stageUndertow": "竹蛏疏洪道",
+
   "tokenProgress": "token",
   "resultProgress": "结果",
   "finishGetResult": "取得完毕",

@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../adapter/view/common_view/widget_util.dart';
 import '../../../domain/salmonrun_data/common.dart';
+import '../../../domain/salmonrun_data/weapon_data.dart';
 import '../../../domain/stat/rate.dart';
 import '../../../util/log.dart';
 
@@ -87,7 +88,7 @@ class InnerWeaponListWidget {
       weapon.add(value);
     });
 
-    Common.weaponMap.forEach((key, value) {
+    WeaponData.idMap.forEach((key, value) {
       if (!weapons.keys.contains(key)) {
         weapon.add(Rate(name: key, rate: 0, num: 0));
       }
@@ -107,8 +108,8 @@ class InnerWeaponListWidget {
     used.sort(((a, b) {
       int compareResult = a.num.compareTo(b.num);
       if (compareResult == 0) {
-        int anum = Common.weaponMap[a.name] ?? 0;
-        int bnum = Common.weaponMap[b.name] ?? 0;
+        int anum = WeaponData.idMap[a.name] ?? 0;
+        int bnum = WeaponData.idMap[b.name] ?? 0;
         return anum.compareTo(bnum);
       } else {
         return -1 * a.num.compareTo(b.num);
@@ -136,7 +137,7 @@ class InnerWeaponListWidget {
       );
       useList.add(sizedbox);
     }
-    if (weapon.length <= Common.weaponMap.length) {
+    if (weapon.length <= WeaponData.idMap.length) {
       // クマブキまだ出てない状態なので金はてなで代用する
       // 出ていれば↑のループで追加されるはず。
       notUseList.add(
@@ -168,7 +169,7 @@ class InnerWeaponListWidget {
                   children: [
                     isNeedRate
                         ? WidgetUtil.createText(
-                            '${L10n.of(context)!.usedRate} : ${(usedCount / (Common.weaponMap.length + 1) * 100).toStringAsFixed(2)}%',
+                            '${L10n.of(context)!.usedRate} : ${(usedCount / (WeaponData.idMap.length + 1) * 100).toStringAsFixed(2)}%',
                             20)
                         : Container(),
                     WidgetUtil.createText(

@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter/src/widgets/image.dart' as materialImage;
+import 'package:salmdroidnw2/domain/salmonrun_data/weapon_data.dart';
 
 import '../../../adapter/view/app_bar/shift_app_bar.dart';
 import '../../../adapter/view/common_view/inner_tab_controller.dart';
@@ -728,7 +728,7 @@ class InnerStats {
                       alignment: Alignment.bottomCenter,
                       child: Opacity(
                         opacity: 0.5,
-                        child: Container(),//Image.asset(Common.getWave()),
+                        child: Container(), //Image.asset(Common.getWave()),
                       ),
                     ),
                   ),
@@ -1026,21 +1026,21 @@ class InnerStats {
       color: Colors.white,
       fontWeight: FontWeight.bold,
     );
-    bool isAllRandom = weapons.contains(Common.randomWeapon);
-    bool isKumaRandom = weapons.contains(Common.goldenRandomWeapon);
+    bool isAllRandom = weapons.contains(WeaponData.randomWeapon);
+    bool isKumaRandom = weapons.contains(WeaponData.goldenRandomWeapon);
     int useCount = stat.weaponRate.keys.length;
     int length;
     if (isAllRandom) {
       int weaponNum;
       double rate;
       if (isNeedAllWeapon) {
-        weaponNum = Common.weaponMap.length + Common.grizzcoWeaponMap.length;
+        weaponNum = WeaponData.idMap.length + WeaponData.grizzcoIdMap.length;
         rate = useCount /
-            (Common.weaponMap.length +
-                Common.grizzcoWeaponMap.length); // add Grizzco weapon
+            (WeaponData.idMap.length +
+                WeaponData.grizzcoIdMap.length); // add Grizzco weapon
       } else {
-        weaponNum = Common.weaponMap.length + 1;
-        rate = useCount / (Common.weaponMap.length + 1); // add Grizzco weapon
+        weaponNum = WeaponData.idMap.length + 1;
+        rate = useCount / (WeaponData.idMap.length + 1); // add Grizzco weapon
       }
       length = 2;
       return List.generate(
@@ -1279,10 +1279,7 @@ class InnerStats {
   Widget getBottomAxWidget(double value, TitleMeta meta) {
     List<String> bossNameList = Common.getBossList();
     int n = value.toInt();
-    return SideTitleWidget(
-        axisSide: meta.axisSide,
-        space: 2,
-        child: Container()
+    return SideTitleWidget(axisSide: meta.axisSide, space: 2, child: Container()
         //  Image.asset(
         //   Common.getOomono(bossNameList[n]),
         //   scale: 5,
@@ -1491,13 +1488,13 @@ class InnerStatsForEggstraWork extends InnerStats {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 3),
-                      child: Container()
-                      //  Image.asset(
-                      //   Common.getImageGikura(),
-                      //   scale: 4.5,
-                      // ),
-                    ),
+                        padding: const EdgeInsets.only(right: 3),
+                        child: Container()
+                        //  Image.asset(
+                        //   Common.getImageGikura(),
+                        //   scale: 4.5,
+                        // ),
+                        ),
                     WidgetUtil.createText(L10n.of(context)!.eggs, 14),
                   ],
                 ),
@@ -1516,13 +1513,13 @@ class InnerStatsForEggstraWork extends InnerStats {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 3),
-                      child: Container()
-                      //  Image.asset(
-                      //   Common.getImageGikura(),
-                      //   scale: 4.5,
-                      // ),
-                    ),
+                        padding: const EdgeInsets.only(right: 3),
+                        child: Container()
+                        //  Image.asset(
+                        //   Common.getImageGikura(),
+                        //   scale: 4.5,
+                        // ),
+                        ),
                     WidgetUtil.createText(L10n.of(context)!.popEggs, 14),
                   ],
                 ),

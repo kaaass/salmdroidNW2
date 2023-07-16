@@ -60,14 +60,6 @@ class Common {
       '9d7272733ae2f2282938da17d69f13419a935eef42239132a02fcf37d8678f10_0.png';
 
   static const Map<String, String> specialIdMap = {
-    '20006': 'U3BlY2lhbFdlYXBvbi0yMDAwNg==', // SpecialWeapon-20006 "ナイスダマ",
-    '20007': 'U3BlY2lhbFdlYXBvbi0yMDAwNw==', // SpecialWeapon-20007 "ホップソナー",
-    '20009':
-        'U3BlY2lhbFdlYXBvbi0yMDAwOQ==', // SpecialWeapon-20009 "メガホンレーザー5.1ch",
-    '20010': 'U3BlY2lhbFdlYXBvbi0yMDAxMA==', // SpecialWeapon-20010 "ジェットパック",
-    '20012': 'U3BlY2lhbFdlYXBvbi0yMDAxMg==', // SpecialWeapon-20012 "カニタンク",
-    '20013': 'U3BlY2lhbFdlYXBvbi0yMDAxMw==', // SpecialWeapon-20013 "サメライド",
-    '20014': 'U3BlY2lhbFdlYXBvbi0yMDAxNA==', // SpecialWeapon-20014 "トリプルトルネード",
   };
 
   static const Map<String, String> specialList = {

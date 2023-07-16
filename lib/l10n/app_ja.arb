@@ -114,6 +114,16 @@
   "spSkewerCoop": "サメライド",
   "spTripleTornadoCoop": "トリプルトルネード",
 
+  "stageSockeye" : "アラマキ砦",
+  "stageHydroplant" : "ムニ・エ―ル海洋発電所",
+  "stageSpawning" : "シェケナダム",
+  "stageMarooners" : "難破船ドン・ブラコ",
+  "stageJammin" : "すじこジャンクション跡",
+
+  "stageWahoo": "スメーシーワールド",
+  "stageAcademy": "海女美術大学",
+  "stageUndertow": "マテガイ放水路",
+
   "tokenProgress": "トークン",
   "resultProgress": "リザルト",
   "finishGetResult": "取得完了",

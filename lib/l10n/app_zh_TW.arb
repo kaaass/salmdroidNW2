@@ -114,6 +114,16 @@
   "spSkewerCoop": "鯊魚坐騎",
   "spTripleTornadoCoop": "三重龍捲風",
 
+  "stageSockeye" : "新卷堡",
+  "stageHydroplant" : "麥年海洋發電所",
+  "stageSpawning" : "鮭壩",
+  "stageMarooners" : "漂浮落難船",
+  "stageJammin" : "生筋子系統交流道遺址",
+
+  "stageWahoo": "醋飯海洋世界",
+  "stageAcademy": "海女美術大學",
+  "stageUndertow": "竹蟶疏洪道",
+
   "tokenProgress": "token",
   "resultProgress": "結果",
   "finishGetResult": "取得完畢",

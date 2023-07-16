@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:salmdroidnw2/domain/salmonrun_data/weapon_data.dart';
 
 import '../../../domain/salmonrun_data/common.dart';
 
@@ -98,7 +99,7 @@ class _BingoWidget extends State<BingoWidget> {
     List<Widget> rowList = [];
     const int rowNum = 5;
     int count = 0;
-    Common.weaponMap.forEach(
+    WeaponData.idMap.forEach(
       (key, value) {
         rowList.add(SizedBox(
           width: size,
@@ -225,7 +226,7 @@ class _BingoWidget extends State<BingoWidget> {
 
   void _createWeaponList() {
     List<String> allWeaponList = [];
-    Common.weaponMap.forEach(
+    WeaponData.idMap.forEach(
       (key, value) {
         allWeaponList.add(key);
       },
