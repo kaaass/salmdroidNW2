@@ -1,9 +1,10 @@
 import 'dart:math';
-import 'package:flutter/src/widgets/image.dart' as materialImage;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:salmdroidnw2/util/string/grade_util.dart';
+import 'package:salmdroidnw2/util/string/stage_util.dart';
 
 import '../../../adapter/view/common_view/widget_util.dart';
 import '../../../adapter/view/screens/statistics.dart';
@@ -13,6 +14,7 @@ import '../../../application/stage_stat_instractor.dart';
 import '../../../application/stat_insteractor.dart';
 import '../../../domain/coop_history_detail/coop_history_detail.dart';
 import '../../../domain/salmonrun_data/common.dart';
+import '../../../domain/salmonrun_data/weapon_data.dart';
 import '../../../domain/stat/stat.dart';
 import '../../../domain/stat/stat_detail.dart';
 import '../../../util/log.dart';
@@ -189,150 +191,148 @@ class _Analyze extends State<Analyze> {
     final textBlockWidth = width * 0.5;
 
     List<Widget> stages = [];
-    Common.stageList.forEach(
-      (id, url) {
-        int played = 0;
-        String grade = '-';
-        int gradePoint = 0;
-        String clearRate = '-';
-        String eggsNightless = '-';
-        String eggsNight = '-';
-        String grzcEggsNightless = '-';
-        String grzcEggsNight = '-';
-        if (_statDetail!.stages[id] != null &&
-            _statDetail!.stages[id]!.played > 0) {
-          played = _statDetail!.stages[id]!.played;
-          grade = Common.getGrade(context, _statDetail!.stages[id]!.maxGradeId);
-          gradePoint = _statDetail!.stages[id]!.maxGradePoint;
-          double rate =
-              _statDetail!.stages[id]!.clear / _statDetail!.stages[id]!.played;
-          clearRate = '${(rate * 100).toStringAsFixed(2)}%';
-          eggsNightless =
-              '${_statDetail!.stages[id]!.maxEggs.nightless.v.floor()}';
-          eggsNight = '${_statDetail!.stages[id]!.maxEggs.night.v.floor()}';
-          grzcEggsNightless =
-              '${_statDetail!.stages[id]!.maxEggsWithGrizzco.nightless.v.floor()}';
-          grzcEggsNight =
-              '${_statDetail!.stages[id]!.maxEggsWithGrizzco.night.v.floor()}';
-        }
+    for (String id in StageUtil.getAllBaseIds()) {
+      int played = 0;
+      String grade = '-';
+      int gradePoint = 0;
+      String clearRate = '-';
+      String eggsNightless = '-';
+      String eggsNight = '-';
+      String grzcEggsNightless = '-';
+      String grzcEggsNight = '-';
+      if (_statDetail!.stages[id] != null &&
+          _statDetail!.stages[id]!.played > 0) {
+        played = _statDetail!.stages[id]!.played;
+        grade = GradeUtil.getName(context, _statDetail!.stages[id]!.maxGradeId);
+        gradePoint = _statDetail!.stages[id]!.maxGradePoint;
+        double rate =
+            _statDetail!.stages[id]!.clear / _statDetail!.stages[id]!.played;
+        clearRate = '${(rate * 100).toStringAsFixed(2)}%';
+        eggsNightless =
+            '${_statDetail!.stages[id]!.maxEggs.nightless.v.floor()}';
+        eggsNight = '${_statDetail!.stages[id]!.maxEggs.night.v.floor()}';
+        grzcEggsNightless =
+            '${_statDetail!.stages[id]!.maxEggsWithGrizzco.nightless.v.floor()}';
+        grzcEggsNight =
+            '${_statDetail!.stages[id]!.maxEggsWithGrizzco.night.v.floor()}';
+      }
 
-        bool isValidGrizzco = Common.isRegularStage(id);
+      bool isValidGrizzco = Common.isRegularStage(id);
 
-        stages.add(
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: [
-                // WidgetUtil.createText('hoge', 18),
-                // WidgetUtil.createDivider(),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: SizedBox(
-                        width: imageBlockWidth,
-                        child: Container(),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        _createTitle(
-                            textBlockWidth, L10n.of(context)!.maxGrade, 14),
-                        _createContent(
-                          textBlockWidth,
-                          WidgetUtil.createText(grade, 14),
-                          WidgetUtil.createText('$gradePoint', 14),
-                        ),
-                        SizedBox(
-                          width: textBlockWidth,
-                          child: WidgetUtil.createSubDivider(),
-                        ),
-                        _createTitle(
-                            textBlockWidth, L10n.of(context)!.jobNum, 14),
-                        _createContent(
-                          textBlockWidth,
-                          null,
-                          WidgetUtil.createText('$played', 14),
-                        ),
-                        SizedBox(
-                          width: textBlockWidth,
-                          child: WidgetUtil.createSubDivider(),
-                        ),
-                        _createTitle(
-                            textBlockWidth, L10n.of(context)!.clearRate, 14),
-                        _createContent(
-                          textBlockWidth,
-                          null,
-                          WidgetUtil.createText(clearRate, 14),
-                        ),
-                        SizedBox(
-                          width: textBlockWidth,
-                          child: WidgetUtil.createSubDivider(),
-                        ),
-                        _createTitle(
-                            textBlockWidth, L10n.of(context)!.maxEggs, 14),
-                        _createContent(
-                          textBlockWidth,
-                          Row(
-                            children: [
-                              const Icon(Icons.sunny),
-                              WidgetUtil.createText(eggsNightless, 14)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.mode_night),
-                              WidgetUtil.createText(eggsNight, 14)
-                            ],
-                          ),
-                        ),
-                        if (isValidGrizzco)
-                          _createContent(
-                            textBlockWidth,
-                            Row(
-                              children: [
-                                const Icon(Icons.sunny, color: Colors.yellow),
-                                Text(
-                                  grzcEggsNightless,
-                                  style: const TextStyle(
-                                      fontSize: 14, color: Colors.yellow),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.mode_night,
-                                    color: Colors.yellow),
-                                Text(
-                                  grzcEggsNight,
-                                  style: const TextStyle(
-                                      fontSize: 14, color: Colors.yellow),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                        SizedBox(
-                          width: textBlockWidth,
-                          child: WidgetUtil.createSubDivider(),
-                        ),
-                        const SizedBox(height: 5),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+      stages.add(
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
           ),
-        );
-      },
-    );
+          child: Column(
+            children: [
+              // WidgetUtil.createText('hoge', 18),
+              // WidgetUtil.createDivider(),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: SizedBox(
+                      width: imageBlockWidth,
+                      child: Container(),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      _createTitle(
+                          textBlockWidth, L10n.of(context)!.maxGrade, 14),
+                      _createContent(
+                        textBlockWidth,
+                        WidgetUtil.createText(grade, 14),
+                        WidgetUtil.createText('$gradePoint', 14),
+                      ),
+                      SizedBox(
+                        width: textBlockWidth,
+                        child: WidgetUtil.createSubDivider(),
+                      ),
+                      _createTitle(
+                          textBlockWidth, L10n.of(context)!.jobNum, 14),
+                      _createContent(
+                        textBlockWidth,
+                        null,
+                        WidgetUtil.createText('$played', 14),
+                      ),
+                      SizedBox(
+                        width: textBlockWidth,
+                        child: WidgetUtil.createSubDivider(),
+                      ),
+                      _createTitle(
+                          textBlockWidth, L10n.of(context)!.clearRate, 14),
+                      _createContent(
+                        textBlockWidth,
+                        null,
+                        WidgetUtil.createText(clearRate, 14),
+                      ),
+                      SizedBox(
+                        width: textBlockWidth,
+                        child: WidgetUtil.createSubDivider(),
+                      ),
+                      _createTitle(
+                          textBlockWidth, L10n.of(context)!.maxEggs, 14),
+                      _createContent(
+                        textBlockWidth,
+                        Row(
+                          children: [
+                            const Icon(Icons.sunny),
+                            WidgetUtil.createText(eggsNightless, 14)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.mode_night),
+                            WidgetUtil.createText(eggsNight, 14)
+                          ],
+                        ),
+                      ),
+                      if (isValidGrizzco)
+                        _createContent(
+                          textBlockWidth,
+                          Row(
+                            children: [
+                              const Icon(Icons.sunny, color: Colors.yellow),
+                              Text(
+                                grzcEggsNightless,
+                                style: const TextStyle(
+                                    fontSize: 14, color: Colors.yellow),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Icon(Icons.mode_night,
+                                  color: Colors.yellow),
+                              Text(
+                                grzcEggsNight,
+                                style: const TextStyle(
+                                    fontSize: 14, color: Colors.yellow),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      SizedBox(
+                        width: textBlockWidth,
+                        child: WidgetUtil.createSubDivider(),
+                      ),
+                      const SizedBox(height: 5),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return stages;
   }
 
@@ -761,10 +761,10 @@ class _Analyze extends State<Analyze> {
     InnerStats innerStats = InnerStats(
       context: context,
       weapons: [
-        Common.randomWeapon,
-        Common.randomWeapon,
-        Common.randomWeapon,
-        Common.randomWeapon
+        WeaponData.randomWeapon,
+        WeaponData.randomWeapon,
+        WeaponData.randomWeapon,
+        WeaponData.randomWeapon,
       ],
       stat: _stat!,
       isDisplayRate: _isDisplayRate,

@@ -3,14 +3,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/salmonrun_data/weapon_data.dart';
 
-class WeaponName {
-  static String getName(BuildContext? c, String path) {
+class WeaponUtil {
+  static String getNameByIdstr(BuildContext? c, String path) {
+    int id = WeaponData.idMap[path] ?? (WeaponData.grizzcoIdMap[path] ?? -1);
+    return getName(c, id);
+  }
+
+  static String getName(BuildContext? c, int id) {
     if (c == null) {
       return '';
     }
-
-    int id = WeaponData.idMap[path] ?? (WeaponData.grizzcoIdMap[path] ?? -1);
     switch (id) {
+      case -2:
+        return '?';
+      case -1:
+        return '?';
       case 0:
         return L10n.of(c)!.shooterShortCoop;
       case 10:
@@ -141,4 +148,9 @@ class WeaponName {
         return '';
     }
   }
+
+  static List<int> getAllIds() {
+    return WeaponData.idMap.values.toList();
+  }
+
 }

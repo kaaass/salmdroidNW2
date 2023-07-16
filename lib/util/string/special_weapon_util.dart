@@ -3,12 +3,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/salmonrun_data/special_weapon.dart';
 
-class SpecialWeaponName {
-  static String getName(BuildContext? c, String idstr) {
+class SpecialWeaponUtil {
+  static String getNameByIdstr(BuildContext? c, String idstr) {
+    int id = SpecialWeaponData.idMap[idstr] ?? -1;
+    return getName(c, id);
+  }
+
+  static String getName(BuildContext? c, int id) {
     if (c == null) {
       return '';
     }
-    int id = SpecialWeaponData.idMap[idstr] ?? -1;
     switch (id) {
       case 20006:
         return L10n.of(c)!.spNiceBallCoop;
@@ -27,5 +31,13 @@ class SpecialWeaponName {
       default:
         return '';
     }
+  }
+
+  static List<int> getAllIds() {
+    return SpecialWeaponData.idMap.values.toList();
+  }
+
+  static List<String> getAllBaseIds() {
+    return SpecialWeaponData.idMap.keys.toList();
   }
 }

@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/image.dart' as materialImage;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:salmdroidnw2/util/string/grade_util.dart';
 
 import '../../../adapter/view/app_bar/shift_app_bar.dart';
 import '../../../adapter/view/common_view/wave_card.dart';
@@ -192,12 +192,6 @@ class _Detail extends State<Detail> {
   //   return widgets;
   // }
 
-  Widget createHeader(Shift? shiftInfo, String id) {
-    return shiftInfo == null
-        ? WidgetUtil.createPrivateShiftCard(id)
-        : WidgetUtil.createShiftCard(shiftInfo);
-  }
-
   Widget buildchild(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     const double graphAreaHeight = 100;
@@ -372,7 +366,7 @@ class _Detail extends State<Detail> {
     double cardWidth = widgetWidth * 0.5;
     double width = 20;
     String grade = _detail.afterGrade != null
-        ? Common.getGrade(context, _detail.afterGrade!.id)
+        ? GradeUtil.getName(context, _detail.afterGrade!.id)
         : ' ';
     int gikura = 0;
     for (var wave in _detail.waveResults) {
@@ -874,7 +868,7 @@ class _Detail extends State<Detail> {
       List<Widget> row = [];
       int count = 0;
       for (var s in sp) {
-        row.add(WidgetUtil.createSpecialImage(s, 16, true));
+        // row.add(WidgetUtil.createSpecialImage(s, 16, true));
         count++;
         if (count == 4) {
           list.add(Row(

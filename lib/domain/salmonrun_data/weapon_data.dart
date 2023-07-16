@@ -1,5 +1,9 @@
 class WeaponData {
   static const Map<String, int> idMap = {
+    '9d7272733ae2f2282938da17d69f13419a935eef42239132a02fcf37d8678f10_0.png':
+        -2, // grizzco random
+    '473fffb2442075078d8bb7125744905abdeae651b6a5b7453ae295582e45f7d1_0.png':
+        -1, // random
     '6e58a0747ab899badcb6f351512c6034e0a49bd6453281f32c7f550a2132fd65_0.png':
         0, //ボールドマーカー,
     '8e134a80cd54f4235329493afd43ff754b367a65e460facfcca862b174754b0e_0.png':

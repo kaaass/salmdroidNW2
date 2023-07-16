@@ -3,12 +3,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/salmonrun_data/salmonid.dart';
 
-class SalmonidName {
-  static String getName(BuildContext? c, String idstr) {
+class SalmonidUtil {
+  static String getNameByIdstr(BuildContext? c, String idstr) {
+    int id = Salmonid.idMap[idstr] ?? -1;
+    return getName(c, id);
+  }
+
+  static String getName(BuildContext? c, int id) {
     if (c == null) {
       return '';
     }
-    int id = Salmonid.idmap[idstr] ?? -1;
     switch (id) {
       case 4:
         return L10n.of(c)!.steelHead;
@@ -41,5 +45,13 @@ class SalmonidName {
       default:
         return '';
     }
+  }
+
+  static List<int> getAllIds() {
+    return Salmonid.idMap.values.toList();
+  }
+
+  static List<String> getAllBaseIds() {
+    return Salmonid.idMap.keys.toList();
   }
 }

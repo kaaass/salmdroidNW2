@@ -1,5 +1,5 @@
 class Salmonid {
-  static const Map<String, int> idmap = {
+  static const Map<String, int> idMap = {
     'Q29vcEVuZW15LTQ=': 4, // CoopEnemy-4 バクダン
     'Q29vcEVuZW15LTU=': 5, // CoopEnemy-5 カタパッド
     'Q29vcEVuZW15LTY=': 6, // CoopEnemy-6 テッパン

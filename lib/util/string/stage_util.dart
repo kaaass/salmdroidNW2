@@ -3,12 +3,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/salmonrun_data/stage.dart';
 
-class StageName {
-  static String getName(BuildContext? c, String idstr) {
+class StageUtil {
+  static String getNameByIdstr(BuildContext? c, String idstr) {
+    int id = StageData.idMap[idstr] ?? -1;
+    return getName(c, id);
+  }
+
+  static String getName(BuildContext? c, int id) {
     if (c == null) {
       return '';
     }
-    int id = StageData.stageMap[idstr] ?? -1;
     switch (id) {
       case 1:
         return L10n.of(c)!.stageSpawning;
@@ -27,5 +31,13 @@ class StageName {
       default:
         return '';
     }
+  }
+
+  static List<int> getAllIds() {
+    return StageData.idMap.values.toList();
+  }
+
+  static List<String> getAllBaseIds() {
+    return StageData.idMap.keys.toList();
   }
 }

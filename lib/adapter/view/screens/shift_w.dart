@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:salmdroidnw2/domain/salmonrun_data/stage.dart';
+import 'package:salmdroidnw2/util/string/grade_util.dart';
+import 'package:salmdroidnw2/util/string/king_salmonid_util.dart';
+import 'package:salmdroidnw2/util/string/stage_util.dart';
+import 'package:salmdroidnw2/util/string/weapon_util.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../../adapter/view/common_view/widget_util.dart';
@@ -42,7 +47,7 @@ class _Shift extends State<ShiftW> {
     widget.appDataInteractor.addListener(_update);
     widget.dataInteractor.addListener(_update);
 
-    Common.stageList.forEach((key, value) {
+    StageData.idMap.forEach((key, value) {
       _mapIsShowStage[key] = true;
     });
   }
@@ -132,19 +137,19 @@ class _Shift extends State<ShiftW> {
       row.add(Row(
         children: [
           GestureDetector(
-            onTap: () {
-              _mapIsShowStage[key] = !(_mapIsShowStage[key] ?? true);
-              setState(() {});
-            },
-            child: Container()
-            //  Image.asset(
-            //   Common.getImageStage(key),
-            //   width: drawerWidth * 0.4,
-            //   color: (_mapIsShowStage[key] ?? false) ? null : Colors.white,
-            //   colorBlendMode:
-            //       (_mapIsShowStage[key] ?? false) ? null : BlendMode.saturation,
-            // ),
-          )
+              onTap: () {
+                _mapIsShowStage[key] = !(_mapIsShowStage[key] ?? true);
+                setState(() {});
+              },
+              child: Container()
+              //  Image.asset(
+              //   Common.getImageStage(key),
+              //   width: drawerWidth * 0.4,
+              //   color: (_mapIsShowStage[key] ?? false) ? null : Colors.white,
+              //   colorBlendMode:
+              //       (_mapIsShowStage[key] ?? false) ? null : BlendMode.saturation,
+              // ),
+              )
         ],
       ));
       idx++;
@@ -283,32 +288,9 @@ class _Shift extends State<ShiftW> {
   Future<List<Widget>> _createShiftList() async {
     await widget.dataInteractor.waitTableCreated();
     var locals = await widget.dataInteractor.loadAllShifts();
-    var futures = await widget.dataInteractor.getFutureSchedule();
-    Log.i('shifts: ${locals.length}, futures:${futures.length}');
+    Log.i('shifts: ${locals.length}');
     List<Widget> listview = [];
 
-    if (futures.isNotEmpty) {
-      // check future and local saved shift.
-      // 'start' is duplicated when contenst, check repeat
-      for (Shift shift in futures) {
-        bool isNeedAdd = true;
-        for (Shift local in locals) {
-          if (local.end.compareTo(shift.start) < 0) {
-            break;
-          }
-          if (local.start.compareTo(shift.start) == 0 &&
-              local.end.compareTo(shift.end) == 0) {
-            isNeedAdd = false;
-          }
-        }
-
-        if (isNeedAdd) {
-          if (_mapIsShowStage[shift.stageId] ?? true) {
-            listview.add(createShiftCard(shift, true));
-          }
-        }
-      }
-    }
     for (Shift shift in locals) {
       if (_mapIsShowStage[shift.stageId] ?? true) {
         // _gradeMinimumが0ならすべて、0でないならでんせつのみ
@@ -344,11 +326,11 @@ class _Shift extends State<ShiftW> {
           });
         }
       },
-      child: _createShiftCard(m, isFuture),
+      child: _createShiftCard(m),
     );
   }
 
-  Widget _createShiftCard(Shift m, bool isFuture) {
+  Widget _createShiftCard(Shift m) {
     final DateTime s = DateTime.parse(m.start).toLocal();
     String start = DateFormat('yyyy-MM-dd HH:mm').format(s);
     final DateTime e = DateTime.parse(m.end).toLocal();
@@ -356,35 +338,28 @@ class _Shift extends State<ShiftW> {
     var screenSize = MediaQuery.of(context).size;
     double unitWidth = screenSize.width * 0.33;
 
-    final TextStyle timeStyle = TextStyle(
-        color: isFuture ? Colors.yellow : Colors.white,
+    const TextStyle timeStyle = TextStyle(
+        color: Colors.white,
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        shadows: const <Shadow>[
+        shadows: <Shadow>[
           Shadow(offset: Offset(2.0, 2.0), blurRadius: 7.0, color: Colors.black)
         ]);
 
     List<Widget> weaponList = [];
     double imageHeight = 65;
     for (var w in m.weapons) {
-//      weaponList.add(WidgetUtil.createWeaponImage(w, unitWidth * 0.25, true));
+      weaponList.add(WidgetUtil.createText(
+          WeaponUtil.getNameByIdstr(context, w), 14));
     }
 
-    Widget detailWidget;
-    if (!isFuture) {
-      detailWidget = _createDetailWidget(m);
-    } else {
-      detailWidget = SizedBox(
-        width: unitWidth,
-      );
-    }
+    Widget detailWidget = _createDetailWidget(m);
 
-    Color? kingColor = isFuture ? Colors.white : null;
     bool isEstimated = false;
-    if (isFuture && widget.appDataInteractor.getIsEstimatedKingSalmonids()) {
+    if (widget.appDataInteractor.getIsEstimatedKingSalmonids()) {
       isEstimated = true;
     }
-    if (!isFuture && m.kingSalmonids.isNotEmpty) {
+    if (m.kingSalmonids.isNotEmpty) {
       isEstimated = true;
     }
     Widget kingSalmonidsWidget = isEstimated
@@ -395,9 +370,10 @@ class _Shift extends State<ShiftW> {
             ),
             child: SizedBox(
               width: unitWidth * 0.25,
-              child: Container()
-              //  Image.asset(Common.getOkashira(m.kingSalmonids),
-              //     color: kingColor),
+              child: WidgetUtil.createText(
+                KingSalmonidUtil.getNameByIdstr(context, m.kingSalmonids),
+                unitWidth * 0.25,
+              ),
             ),
           )
         : Container();
@@ -411,12 +387,10 @@ class _Shift extends State<ShiftW> {
             children: [
               SizedBox(
                 width: unitWidth,
-                child: Container()
-                //  Image.asset(
-                //   Common.getImageStage(m.stageId),
-                //   height: imageHeight,
-                //   fit: BoxFit.fitWidth,
-                // ),
+                child: WidgetUtil.createText(
+                  StageUtil.getNameByIdstr(context, m.stageId),
+                  14,
+                ),
               ),
               SizedBox(
                 width: unitWidth,
@@ -479,7 +453,7 @@ class _Shift extends State<ShiftW> {
         grade = WidgetUtil.createText('${m.maxGradePoint}', stringSize);
       } else {
         grade = WidgetUtil.createText(
-            Common.getGrade(context, m.maxGradeId), stringSize * 0.8);
+            GradeUtil.getName(context, m.maxGradeId), stringSize * 0.8);
       }
     }
     return SizedBox(
@@ -496,11 +470,7 @@ class _Shift extends State<ShiftW> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 2, right: 5),
-                  child: Container()
-                  //  Image.asset(
-                  //   Common.getImageGikura(),
-                  //   scale: 5.0,
-                  // ),
+                  child: WidgetUtil.createText('●', 14),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8),

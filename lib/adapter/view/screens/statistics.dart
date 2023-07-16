@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:salmdroidnw2/domain/salmonrun_data/weapon_data.dart';
+import 'package:salmdroidnw2/util/string/grade_util.dart';
+import 'package:salmdroidnw2/util/string/salmonid_util.dart';
+import 'package:salmdroidnw2/util/string/special_weapon_util.dart';
+import 'package:salmdroidnw2/util/string/weapon_util.dart';
 
 import '../../../adapter/view/app_bar/shift_app_bar.dart';
 import '../../../adapter/view/common_view/inner_tab_controller.dart';
@@ -214,7 +218,7 @@ class InnerStats {
             children: [
               SizedBox(
                 height: 20,
-                child: getText(Common.getGrade(context, stat.maxGradeId)),
+                child: getText(GradeUtil.getName(context, stat.maxGradeId)),
               ),
               SizedBox(
                 width: screenSize.width * 0.45,
@@ -1073,7 +1077,7 @@ class InnerStats {
     } else if (isKumaRandom) {
       List<Rate> list = [];
       length = 0;
-      Common.grizzcoWeaponMap.forEach((key, value) {
+      WeaponData.grizzcoIdMap.forEach((key, value) {
         if (stat.weaponRate.containsKey(key)) {
           list.add(stat.weaponRate[key]!);
         } else {
@@ -1125,7 +1129,7 @@ class InnerStats {
 
   List<PieChartSectionData> createSpecialSections(bool isDisplayRate) {
     List<Rate> list = [];
-    for (var sp in Common.getSpecialWeaponList()) {
+    for (var sp in SpecialWeaponUtil.getAllBaseIds()) {
       if (stat.specialRate[sp] != null) {
         list.add(stat.specialRate[sp]!);
       } else {
@@ -1158,14 +1162,17 @@ class InnerStats {
   Widget createPieChardGuidWeapon() {
     List<Widget> wList = [];
 
-    bool isGreenRandom = weapons.contains(Common.randomWeapon);
-    bool isKumaRandom = weapons.contains(Common.goldenRandomWeapon);
+    bool isGreenRandom = weapons.contains(WeaponData.randomWeapon);
+    bool isKumaRandom = weapons.contains(WeaponData.goldenRandomWeapon);
     if (isGreenRandom) {
       wList.add(
         Card(
           color: Common.colorList[0],
           margin: const EdgeInsets.all(0.1),
-          child: createWeaponImage(Common.randomWeapon),
+          child: WidgetUtil.createText(
+            WeaponUtil.getNameByIdstr(context, WeaponData.randomWeapon),
+            14,
+          ),
         ),
       );
       if (!isNeedAllWeapon) {
@@ -1200,7 +1207,7 @@ class InnerStats {
       List<Widget> col = [];
       List<Widget> row = [];
       int idx = 0;
-      Common.grizzcoWeaponMap.forEach((key, value) {
+      WeaponData.grizzcoIdMap.forEach((key, value) {
         if (col.length == 4) {
           row.add(Column(children: col));
           col = [];
@@ -1209,7 +1216,10 @@ class InnerStats {
         col.add(Card(
           color: Common.colorList[idx++],
           margin: const EdgeInsets.all(0.1),
-          child: createWeaponImage(key),
+          child: WidgetUtil.createText(
+            WeaponUtil.getNameByIdstr(context, key),
+            14,
+          ),
         ));
       });
       row.add(Column(children: col));
@@ -1222,7 +1232,10 @@ class InnerStats {
           Card(
             color: Common.colorList[i],
             margin: const EdgeInsets.all(0.1),
-            child: createWeaponImage(weapons[i]),
+            child: WidgetUtil.createText(
+            WeaponUtil.getNameByIdstr(context, weapons[i]),
+            14,
+          ),
           ),
         );
       }
@@ -1234,7 +1247,7 @@ class InnerStats {
 
   Widget createPieChardGuidSp() {
     List<Widget> wList = [];
-    List<String> spList = Common.getSpecialWeaponList();
+    List<int> spList = SpecialWeaponUtil.getAllIds();
     for (int start = 0, end = 4; start < spList.length; start += 4, end += 4) {
       List<Widget> children = [];
       for (int i = start; i < end; i++) {
@@ -1244,7 +1257,7 @@ class InnerStats {
         children.add(Card(
           color: Common.colorList[i],
           margin: const EdgeInsets.all(0.1),
-          child: createImageSpecial(spList[i]),
+          child: Container(), // createImageSpecial(spList[i]),
         ));
       }
       wList.add(Column(
@@ -1258,14 +1271,6 @@ class InnerStats {
     );
   }
 
-  Widget createImageSpecial(String s) {
-    return WidgetUtil.createSpecialImageFromId(s, 25, false);
-  }
-
-  Widget createWeaponImage(String p) {
-    return WidgetUtil.createWeaponImage(p, 25, false);
-  }
-
   Widget getLeftAxWidget(double value, TitleMeta meta) {
     String str = (isGraphRate && value.toInt() == 100)
         ? '100%'
@@ -1277,7 +1282,7 @@ class InnerStats {
   }
 
   Widget getBottomAxWidget(double value, TitleMeta meta) {
-    List<String> bossNameList = Common.getBossList();
+    List<int> bossNameList = SalmonidUtil.getAllIds();
     int n = value.toInt();
     return SideTitleWidget(axisSide: meta.axisSide, space: 2, child: Container()
         //  Image.asset(
@@ -1379,7 +1384,7 @@ class InnerStats {
   List<BarChartGroupData> getData(bool isRate) {
     List<BarChartGroupData> l = [];
     int count = 0;
-    for (var b in Common.getBossList()) {
+    for (var b in SalmonidUtil.getAllBaseIds()) {
       double value;
       if (isRate) {
         double def = (stat.salmonidsMyDef[b] == null

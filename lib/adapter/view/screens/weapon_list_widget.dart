@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../adapter/view/common_view/widget_util.dart';
-import '../../../domain/salmonrun_data/common.dart';
 import '../../../domain/salmonrun_data/weapon_data.dart';
 import '../../../domain/stat/rate.dart';
 import '../../../util/log.dart';
@@ -129,7 +128,7 @@ class InnerWeaponListWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              WidgetUtil.createWeaponImage(v.name, weaponSize),
+              // WidgetUtil.createWeaponImage(v.name, weaponSize),
               WidgetUtil.createText('${v.num > 0 ? v.num : ' '}', 10),
             ],
           ),
@@ -148,7 +147,8 @@ class InnerWeaponListWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  WidgetUtil.createWeaponImage(Common.randomWeapon, weaponSize),
+                  // WidgetUtil.createWeaponImage(
+                  //     WeaponData.randomWeapon, weaponSize),
                 ]),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:salmdroidnw2/util/string/grade_util.dart';
 
 import '../../../adapter/view/app_bar/shift_app_bar.dart';
 import '../../../adapter/view/common_view/widget_util.dart';
@@ -41,7 +42,6 @@ class _Summary extends State<Summary> {
   List<String> _idList = [];
   bool isLoading = false;
   bool isRefreshing = false;
-  late final Widget _ad;
 
   @override
   void initState() {
@@ -407,7 +407,7 @@ class _Summary extends State<Summary> {
       // private job
       return Container();
     } else {
-      return getText(Common.getGrade(context, grade.id));
+      return getText(GradeUtil.getName(context, grade.id));
     }
   }
 

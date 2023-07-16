@@ -2,12 +2,13 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:salmdroidnw2/util/string/king_salmonid_util.dart';
+import 'package:salmdroidnw2/util/string/salmonid_util.dart';
 
-import '../../../domain/salmonrun_data/common.dart';
 import '../../view/common_view/widget_util.dart';
 
 class DefeatGraph {
-  static final double _textSize = 10;
+  static const double _textSize = 10;
   static BuildContext? _context;
 
   static Widget createDefeatChart(BuildContext context, Map<String, int> defs,
@@ -111,32 +112,26 @@ class DefeatGraph {
   }
 
   static Widget getBottomAxWidget(double value, TitleMeta meta) {
-    List<String> bossList = [];
-
-    Common.bossList.forEach((key, value) {
-      bossList.add(key);
-    });
-
+    List<int> idList = SalmonidUtil.getAllIds();
     int n = value.toInt();
+    String name = SalmonidUtil.getName(_context, idList[n]);
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child: WidgetUtil.createText(Common.getSalmonidsName(_context, n), _textSize),
+      child: WidgetUtil.createText(name, _textSize),
     );
   }
 
   static Widget getBottomAxWidgetForKing(double value, TitleMeta meta) {
-    List<String> bossList = [];
-
-    Common.okashiraList.forEach((key, value) {
-      bossList.add(key);
-    });
-
+    List<int> idList = KingSalmonidUtil.getAllIds();
     int n = value.toInt();
+    String name = KingSalmonidUtil.getName(_context, idList[n]);
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child: WidgetUtil.createText(Common.getKingSalmonidsName(_context, n), _textSize),
+      child: WidgetUtil.createText(name, _textSize),
     );
   }
 }

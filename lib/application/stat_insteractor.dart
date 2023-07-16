@@ -1,3 +1,6 @@
+import 'package:salmdroidnw2/domain/salmonrun_data/weapon_data.dart';
+import 'package:salmdroidnw2/util/string/special_weapon_util.dart';
+
 import '../application/common_utility.dart';
 import '../domain/coop_history_detail/coop_history_detail.dart';
 import '../domain/salmonrun_data/common.dart';
@@ -61,7 +64,7 @@ class StatInteractor {
           Rate(name: key, rate: value / weaponTotal, num: value);
     });
     if (forceAllWeapon) {
-      Common.grizzcoWeaponMap.forEach((key, value) {
+      WeaponData.grizzcoIdMap.forEach((key, value) {
         if (!_stat.weapons.containsKey(key)) {
           _stat.weaponRate[key] = Rate(name: key, rate: 0, num: 0);
         }
@@ -206,14 +209,14 @@ class StatInteractor {
     }
 
     for (var w in j.myResult.weapons) {
-      if (w.image.url != Common.randomWeapon) {
+      if (w.image.url != WeaponData.randomWeapon) {
         _stat.weapons[w.image.url] = _stat.weapons[w.image.url] != null
             ? _stat.weapons[w.image.url]! + 1
             : 1;
       }
     }
     String s = j.myResult.specialWeapon!.id;
-    String baseId = Common.getSpecialId(s);
+    String baseId = s;
     _stat.specials[baseId] =
         _stat.specials[baseId] != null ? _stat.specials[baseId]! + 1 : 1;
 

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:salmdroidnw2/domain/salmonrun_data/weapon_data.dart';
+
 import '../domain/coop_history_detail/coop_history_detail.dart';
 import '../domain/salmonrun_data/common.dart';
 import '../domain/stat/appear_unit.dart';
@@ -150,7 +152,7 @@ class StatDetailInstractor {
     // max eggs
     int egg = 0;
     bool isGrizzco = false;
-    if (j.weapons.first.image.url == Common.goldenRandomWeapon) {
+    if (j.weapons.first.image.url == WeaponData.goldenRandomWeapon) {
       isGrizzco = true;
     }
 

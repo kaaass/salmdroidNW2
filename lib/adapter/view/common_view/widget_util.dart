@@ -19,66 +19,66 @@ class WidgetUtil {
     Colors.grey,
   ];
 
-  static Widget createShiftCard(Shift m) {
-    final DateTime s = DateTime.parse(m.start).toLocal();
-    String start = DateFormat('yyyy-MM-dd HH:mm').format(s);
-    final DateTime e = DateTime.parse(m.end).toLocal();
-    String end = DateFormat('MM-dd HH:mm').format(e);
-    return _createCard(m.weapons, m.stageId, '$start - $end');
-  }
+//   static Widget createShiftCard(Shift m) {
+//     final DateTime s = DateTime.parse(m.start).toLocal();
+//     String start = DateFormat('yyyy-MM-dd HH:mm').format(s);
+//     final DateTime e = DateTime.parse(m.end).toLocal();
+//     String end = DateFormat('MM-dd HH:mm').format(e);
+//     return _createCard(m.weapons, m.stageId, '$start - $end');
+//   }
 
-  static Widget createPrivateShiftCard(String? st) {
-    return _createCard([], st ?? Common.getBaseStageId(), 'Private');
-  }
+//   static Widget createPrivateShiftCard(String? st) {
+//     return _createCard([], st ?? Common.getBaseStageId(), 'Private');
+//   }
 
-  static Widget _createCard(List<String> weapons, String stageId, String str) {
-    List<Widget> weaponList = [];
-    for (var w in weapons) {
-//      weaponList.add(createWeaponImage(w, 35, true));
-    }
+//   static Widget _createCard(List<String> weapons, String stageId, String str) {
+//     List<Widget> weaponList = [];
+//     for (var w in weapons) {
+// //      weaponList.add(createWeaponImage(w, 35, true));
+//     }
 
-    return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      decoration: const BoxDecoration(
-        border: Border(),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: SizedBox(
-        height: 80,
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, right: 2, bottom: 2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: weaponList,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      str,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          shadows: <Shadow>[
-                            Shadow(
-                                offset: Offset(2.0, 2.0),
-                                blurRadius: 7.0,
-                                color: Colors.black)
-                          ]),
-                    ),
-                  ]),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+//     return Container(
+//       clipBehavior: Clip.antiAliasWithSaveLayer,
+//       decoration: const BoxDecoration(
+//         border: Border(),
+//         borderRadius: BorderRadius.all(Radius.circular(10)),
+//       ),
+//       child: SizedBox(
+//         height: 80,
+//         child: Stack(
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.only(top: 40, right: 2, bottom: 2),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 crossAxisAlignment: CrossAxisAlignment.end,
+//                 children: weaponList,
+//               ),
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+//               child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Text(
+//                       str,
+//                       style: const TextStyle(
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                           shadows: <Shadow>[
+//                             Shadow(
+//                                 offset: Offset(2.0, 2.0),
+//                                 blurRadius: 7.0,
+//                                 color: Colors.black)
+//                           ]),
+//                     ),
+//                   ]),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
   static Widget createText(String txt, double size) {
     return Text(
@@ -100,39 +100,6 @@ class WidgetUtil {
       txt,
       style: TextStyle(fontSize: size),
     );
-  }
-
-  static Widget createWeaponImage(String w, double size,
-      [bool isBackgroud = false]) {
-    return isBackgroud
-        ? Card(
-            color: isBackgroud ? Colors.black : null,
-            margin: const EdgeInsets.all(0),
-            child: Container(),
-          )
-        : Container();
-  }
-
-  static Widget createSpecialImageFromId(String id, double size,
-      [bool isBackgroud = false]) {
-    return isBackgroud
-        ? Card(
-            color: Colors.black,
-            margin: const EdgeInsets.all(0),
-            child: Container(),
-          )
-        : Container();
-  }
-
-  static Widget createSpecialImage(String sp, double size,
-      [bool isBackgroud = false]) {
-    return isBackgroud
-        ? Card(
-            color: isBackgroud ? Colors.black : null,
-            margin: const EdgeInsets.all(0),
-            child: Container(),
-          )
-        : Container();
   }
 
   static Widget createDivider() {

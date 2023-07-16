@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/salmonrun_data/grade.dart';
 
-class GradeName {
+class GradeUtil {
   static String getName(BuildContext? c, String idstr) {
     if (c == null) {
       return '';

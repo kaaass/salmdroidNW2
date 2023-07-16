@@ -5,7 +5,6 @@ import 'package:settings_ui/settings_ui.dart';
 
 import '../../../adapter/view/common_view/empty_app_bar.dart';
 import '../../../adapter/view/common_view/widget_util.dart';
-import '../../../adapter/view/screens/bingo_widget.dart';
 import '../../../adapter/view/screens/news_dialog.dart';
 import '../../../application/app_data_instractor.dart';
 import '../../../application/backup_interactor.dart';
@@ -107,13 +106,12 @@ class _Setting extends State<Setting> {
                 _createTileCalcData(),
               ],
             ),
-            SettingsSection(
-              title: const Text('Util'),
-              tiles: <SettingsTile>[
-                _createTileBingo(),
-                if (_isTestApp()) _createTileIsAd(),
-              ],
-            ),
+            // SettingsSection(
+            //   title: const Text('Util'),
+            //   tiles: <SettingsTile>[
+            //     if (_isTestApp()) _createTileIsAd(),
+            //   ],
+            // ),
             if (_isTestApp())
               SettingsSection(
                 title: const Text('Salmon Stats'),
@@ -241,20 +239,6 @@ class _Setting extends State<Setting> {
       onToggle: (value) {
         widget.appDataInteractor.saveUploadStats(value);
         setState(() {});
-      },
-    );
-  }
-
-  SettingsTile _createTileBingo() {
-    return SettingsTile.navigation(
-      leading: const Icon(Icons.grid_on),
-      title: Text(L10n.of(context)!.bingo),
-      onPressed: (context) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const BingoWidget(),
-          ),
-        );
       },
     );
   }

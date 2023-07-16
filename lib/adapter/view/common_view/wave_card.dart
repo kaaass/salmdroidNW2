@@ -28,7 +28,7 @@ class WaveCard {
       List<Widget> row = [];
       int count = 0;
       for (var s in sp) {
-        row.add(WidgetUtil.createSpecialImage(s, 16, true));
+//        row.add(WidgetUtil.createSpecialImage(s, 16, true));
         count++;
         if (count == 4) {
           list.add(Row(
