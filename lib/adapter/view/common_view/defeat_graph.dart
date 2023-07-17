@@ -2,13 +2,14 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:salmdroidnw2/util/string/king_salmonid_util.dart';
 import 'package:salmdroidnw2/util/string/salmonid_util.dart';
 
 import '../../view/common_view/widget_util.dart';
 
 class DefeatGraph {
-  static const double _textSize = 10;
+  static final double _textSize = 10.w;
   static BuildContext? _context;
 
   static Widget createDefeatChart(BuildContext context, Map<String, int> defs,
@@ -60,8 +61,8 @@ class DefeatGraph {
     return Column(
       children: [
         SizedBox(
-          height: 200,
-          width: MediaQuery.of(context).size.width * 0.9,
+          height: 300,
+          width: 20 + defs.keys.length * 30, //.of(context).size.width * 0.9,
           child: BarChart(
             BarChartData(
               alignment: BarChartAlignment.center,
@@ -69,7 +70,7 @@ class DefeatGraph {
                   bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                           showTitles: true,
-                          reservedSize: 30,
+                          reservedSize: 150,
                           getTitlesWidget: f)),
                   leftTitles:
                       AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -82,7 +83,8 @@ class DefeatGraph {
                 touchTooltipData: BarTouchTooltipData(
                   tooltipBgColor: Colors.transparent,
                   tooltipPadding: EdgeInsets.zero,
-                  tooltipMargin: 0,
+                  tooltipMargin: 10,
+                  rotateAngle: -90,
                   getTooltipItem: (
                     BarChartGroupData group,
                     int groupIndex,
@@ -91,9 +93,9 @@ class DefeatGraph {
                   ) {
                     return BarTooltipItem(
                       rod.toY.round().toString(),
-                      const TextStyle(
+                      TextStyle(
                         color: Colors.white,
-                        fontSize: 10,
+                        fontSize: 14.w,
                       ),
                     );
                   },
@@ -116,10 +118,19 @@ class DefeatGraph {
     int n = value.toInt();
     String name = SalmonidUtil.getName(_context, idList[n]);
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 2,
-      child: WidgetUtil.createText(name, _textSize),
+    return RotatedBox(
+      quarterTurns: -1,
+      child: SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 2,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: WidgetUtil.createText(name, 18.w),
+          ),
+        ),
+      ),
     );
   }
 
@@ -128,10 +139,19 @@ class DefeatGraph {
     int n = value.toInt();
     String name = KingSalmonidUtil.getName(_context, idList[n]);
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 2,
-      child: WidgetUtil.createText(name, _textSize),
+    return RotatedBox(
+      quarterTurns: -1,
+      child: SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 2,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: WidgetUtil.createText(name, 18.w),
+          ),
+        ),
+      ),
     );
   }
 }

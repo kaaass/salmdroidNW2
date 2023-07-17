@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:salmdroidnw2/adapter/view/common_view/screen.dart';
 import 'package:salmdroidnw2/util/converter/defeat_converter.dart';
 import 'package:salmdroidnw2/util/converter/king_defeat_converter.dart';
 
@@ -69,6 +73,7 @@ class _Profile extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    Screen.init(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -132,51 +137,43 @@ class _Profile extends State<Profile> {
               ),
               child: Column(
                 children: [
-                  WidgetUtil.createText(L10n.of(context)!.totalDefeats, 16),
-                  WidgetUtil.createDivider(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: WidgetUtil.createText(
-                          '${L10n.of(context)!.countingData} : ', //${_defeat!.num}',
-                          12),
-                    ),
-                  ),
-                  SizedBox(height: 20, child: Container()),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
+                  Column(
+                    children: [
+                      WidgetUtil.createText(
+                          L10n.of(context)!.totalDefeats, 24.w),
+                      WidgetUtil.createDivider(),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Align(
+                          alignment: Alignment.centerRight,
                           child: WidgetUtil.createText(
-                              L10n.of(context)!.salmonids, 14),
+                              '${L10n.of(context)!.countingData} : ${_defeat!.num}',
+                              16.w),
                         ),
-                        WidgetUtil.createSubDivider(),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        RotatedBox(
+                          quarterTurns: 1,
+                          child: DefeatGraph.createDefeatChart(context,
+                              defeatMap, 10, DefeatGraph.getBottomAxWidget),
+                        ),
+                        RotatedBox(
+                          quarterTurns: 1,
+                          child: DefeatGraph.createDefeatChart(
+                              context,
+                              kingDefeatMap,
+                              1,
+                              DefeatGraph.getBottomAxWidgetForKing),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20, child: Container()),
-                  DefeatGraph.createDefeatChart(
-                      context, defeatMap, 10, DefeatGraph.getBottomAxWidget),
-                  SizedBox(height: 20, child: Container()),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: WidgetUtil.createText(
-                              L10n.of(context)!.kingSalmonids, 14),
-                        ),
-                        WidgetUtil.createSubDivider(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20, child: Container()),
-                  DefeatGraph.createDefeatChart(context, kingDefeatMap, 1,
-                      DefeatGraph.getBottomAxWidgetForKing),
                 ],
               ),
             ),
@@ -217,6 +214,15 @@ class _Profile extends State<Profile> {
           onPressed: () async {
             await widget.dataInteractor.calcForAllData();
             Log.i('-debug-----------------------');
+          },
+        ),
+        ElevatedButton(
+          child: const Text("launch"),
+          onPressed: () async {
+            Log.i('-debug-----------------------');
+            ProcessResult r = await Process.run('E:\\test.bat', []);
+            Log.i('exitCode: ${r.exitCode}');
+            Log.i('stdout: ${r.stdout}');
           },
         ),
         ElevatedButton(

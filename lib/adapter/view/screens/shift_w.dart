@@ -16,6 +16,7 @@ import '../../../application/data_interactor.dart';
 import '../../../domain/salmonrun_data/common.dart';
 import '../../../domain/shift/shift.dart';
 import '../../../util/log.dart';
+import '../common_view/screen.dart';
 
 class ShiftW extends StatefulWidget {
   const ShiftW({
@@ -67,6 +68,7 @@ class _Shift extends State<ShiftW> {
   @override
   Widget build(BuildContext context) {
     Log.i('shift build');
+    Screen.init(context);
     Widget barTitle = Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
