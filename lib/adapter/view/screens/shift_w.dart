@@ -364,7 +364,7 @@ class _Shift extends State<ShiftW> {
         ]);
 
     List<Widget> weaponList = [];
-    double imageHeight = 65;
+    double imageHeight = 75;
     for (var w in m.weapons) {
       weaponList.add(WidgetUtil.createWeaponImage(w, unitWidth * 0.25, true));
     }
