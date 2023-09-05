@@ -9,7 +9,7 @@ import '../../../adapter/view/screens/statistics.dart';
 import '../../../application/app_data_instractor.dart';
 import '../../../application/data_interactor.dart';
 import '../../../application/stat_insteractor.dart';
-import '../../../domain/coop_history_detail/coop_history_detail.dart';
+import '../../../domain/coop_history_detail/coop_history_detail.dart' hide Image;
 import '../../../domain/salmonrun_data/common.dart';
 import '../../../domain/shift/shift.dart';
 import '../../../domain/state/data_state.dart';
@@ -175,6 +175,7 @@ class _Summary extends State<Summary> {
             },
           );
   }
+
   //--------------------------------------
 
   Future<void> getResults() async {
@@ -286,12 +287,12 @@ class _Summary extends State<Summary> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Image.asset(
-                      //   Common.getImageGikura(),
-                      //   scale: 5.0,
-                      // ),
+                      Image.asset(
+                        Common.getImageGikura(),
+                        scale: 5.0,
+                      ),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 2, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
                           child: getText('x${getGoldenEgg(job)}')),
                     ],
                   ),
@@ -306,12 +307,12 @@ class _Summary extends State<Summary> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Image.asset(
-                      //   Common.getImageIkura(),
-                      //   scale: 8.0,
-                      // ),
+                      Image.asset(
+                        Common.getImageIkura(),
+                        scale: 8.0,
+                      ),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 2, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
                           child: getText('x${getEgg(job)}')),
                     ],
                   ),
@@ -475,10 +476,9 @@ class _Summary extends State<Summary> {
                     ? SizedBox(
                         width: 25,
                         height: 25,
-                        child: Container()
-                        //  Image.asset(
-                        //   Common.getOkashira(job.bossResult!.boss.id),
-                        // ),
+                        child: Image.asset(
+                          Common.getOkashira(job.bossResult!.boss.id),
+                        ),
                       )
                     : Container(),
                 Row(
