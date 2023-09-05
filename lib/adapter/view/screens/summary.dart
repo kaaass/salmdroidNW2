@@ -41,7 +41,6 @@ class _Summary extends State<Summary> {
   List<String> _idList = [];
   bool isLoading = false;
   bool isRefreshing = false;
-  late final Widget _ad;
 
   @override
   void initState() {
@@ -180,7 +179,7 @@ class _Summary extends State<Summary> {
 
   Future<void> getResults() async {
     Log.i('_detail.length: ${_details.length}');
-    _detailSummary = [_ad];
+    _detailSummary = [];
     _idList = [];
     for (var detail in _details) {
       _idList.add(detail.historyId);
