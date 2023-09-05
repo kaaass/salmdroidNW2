@@ -51,7 +51,7 @@ class _Detail extends State<Detail> {
 
   void _loadDetail(String id) {
     for (CoopHistoryDetail h in widget.details) {
-      if (h.id == id) {
+      if (h.historyId == id) {
         _detail = h;
         break;
       }
