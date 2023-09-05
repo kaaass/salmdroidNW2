@@ -150,7 +150,7 @@ class StatDetailInstractor {
     // max eggs
     int egg = 0;
     bool isGrizzco = false;
-    if (j.weapons.first.image.url == Common.goldenRandomWeapon) {
+    if (j.weapons.isNotEmpty && j.weapons.first.image.url == Common.goldenRandomWeapon) {
       isGrizzco = true;
     }
 
