@@ -131,20 +131,7 @@ class DataInteractor extends ChangeNotifier {
   Future<int> getNumOfJobs() async {
     Log.i('getNumOfRegularJobs()');
     await waitTableCreated();
-    Stream stream = getStreamOfResults();
-    int ret = 0;
-    // await for (CoopHistoryDetail history in stream) {
-    //   if (history.CoopHistoryDetailDetail.afterGrade == null) {
-    //     if (CommonUtil.isRuleTeamContest(history.CoopHistoryDetailDetail.rule)) {
-    //       ret++;
-    //     }
-    //   } else {
-    //     if (CommonUtil.isRuleRegular(history.CoopHistoryDetailDetail.rule) ||
-    //         CommonUtil.isRuleBigRun(history.CoopHistoryDetailDetail.rule)) {
-    //       ret++;
-    //     }
-    //   }
-    // }
+    int ret = await coopDetailRepository.getCount();
     Log.i('getNumOfRegularJobs: $ret');
     return ret;
   }
@@ -305,8 +292,8 @@ class DataInteractor extends ChangeNotifier {
   }
 
   Future<void> calc(Stream stream) async {
-    _defeatInfo = Defeat();
-    _kingDefeatInfo = KingDefeat();
+    _defeatInfo = DefeatConverter.createEmptyDefeat();
+    _kingDefeatInfo = KingDefeatConverter.createEmptyKingDefeat();
     isUpdating = true;
 
     await for (CoopHistoryDetail history in stream) {
@@ -342,21 +329,25 @@ class DataInteractor extends ChangeNotifier {
     }
     if (isTarget) {
       // for salmonids
+      Map<String, int> defeatMap =
+          DefeatConverter.createMapFromData(_defeatInfo!);
       _getDefeatalmonids(history).forEach((key, value) {
-        // _defeatInfo!.defeatMap[key] =
-        //     (_defeatInfo!.defeatMap[key] ?? 0) + value;
+        defeatMap[key] = (defeatMap[key] ?? 0) + value;
       });
 
       // for king salmonids
-      // if (history.bossResult != null) {
-      //   if (history.CoopHistoryDetailDetail.bossResult!.hasDefeatBoss) {
-      //     _kingDefeatInfo!.defeatMap[history.CoopHistoryDetailDetail.bossResult!
-      //         .boss.id] = (_kingDefeatInfo!.defeatMap[
-      //                 history.CoopHistoryDetailDetail.bossResult!.boss.id] ??
-      //             0) +
-      //         1;
-      //   }
-      // }
+      Map<String, int> kingDefeatMap =
+          KingDefeatConverter.createMapFromData(_kingDefeatInfo!);
+      if (history.bossResult != null) {
+        if (history.bossResult!.hasDefeatBoss) {
+          kingDefeatMap[history.bossResult!.boss.id] =
+              (kingDefeatMap[history.bossResult!.boss.id] ?? 0) + 1;
+        }
+      }
+
+      _defeatInfo = DefeatConverter.createDefeatFromMap(defeatMap);
+      _kingDefeatInfo =
+          KingDefeatConverter.createKingDefeatFromMap(kingDefeatMap);
 
       _defeatInfo!.latestId = history.historyId;
       _defeatInfo!.num++;
@@ -366,11 +357,10 @@ class DataInteractor extends ChangeNotifier {
   }
 
   Map<String, int> _getDefeatalmonids(CoopHistoryDetail detail) {
-    Defeat ret = Defeat();
-    // for (var enemy in detail.enemyResults) {
-    //   ret.defeatMap[enemy.enemy.id] = enemy.defeatCount;
-    // }
-    // return ret.defeatMap;
-    return {};
+    Map<String, int> map = Defeat.createInitMap();
+    for (var enemy in detail.enemyResults) {
+      map[enemy.enemy.id] = enemy.defeatCount;
+    }
+    return map;
   }
 }

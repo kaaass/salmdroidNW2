@@ -12,8 +12,16 @@ class KingDefeatConverter {
   static KingDefeat createKingDefeatFromMap(Map<String, dynamic> org) {
     return KingDefeat()
       ..num = org['num']
-      ..latestId = org['latestId']
+      ..latestId = org['latestId'] ?? ''
       ..coopEnemy23 = org['coopEnemy23']
       ..coopEnemy24 = org['coopEnemy24'];
+  }
+
+  static Map<String, int> createMapFromData(KingDefeat data) {
+    Map<String, int> ret = {};
+    ret['num'] = data.num;
+    ret['coopEnemy23'] = data.coopEnemy23;
+    ret['coopEnemy24'] = data.coopEnemy24;
+    return ret;
   }
 }
