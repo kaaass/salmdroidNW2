@@ -8,7 +8,7 @@
   "openPlayStore": "你想打开PlayStore应用程序吗？",
 
   "connectAccountButton": "关联账户",
-  "getResultButton": "取得结果",
+  "getResultButton": "获取结果",
 
   "grizzcoPointCard": "熊先生点数卡",
   "regularPoint": "现有点数",
@@ -27,12 +27,12 @@
 
   "tokenProgress": "token",
   "resultProgress": "结果",
-  "finishGetResult": "取得完毕",
+  "finishGetResult": "获取完成",
   "noNewResult": "未找到新打工结果",
   "errFApi": "f API error",
   "errServer": "server error",
   "updatingToken": "更新token中...",
-  "gettingResult": "取得结果中...",
+  "gettingResult": "获取结果中...",
 
   "dangerRate": "危险度",
   "goldenEgg": "金鲑鱼卵",
@@ -69,8 +69,8 @@
   "works": "次打工",
   "options": "选择",
   "estimatedKing": "预测的头目鲑鱼",
-  "filter": "滤镜",
-  "resetFilter": "清楚的条件",
+  "filter": "过滤条件",
+  "resetFilter": "重置过滤条件",
   "stage": "场地",
 
   "clearRate": "过关率",
