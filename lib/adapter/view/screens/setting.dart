@@ -155,7 +155,7 @@ class _Setting extends State<Setting> {
       case Language.english:
         return 'English';
       case Language.zh:
-        return '簡体字';
+        return '简体字';
       case Language.zhtw:
         return '繁体字';
       default:
