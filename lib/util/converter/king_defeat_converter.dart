@@ -24,4 +24,11 @@ class KingDefeatConverter {
     ret['coopEnemy24'] = data.coopEnemy24;
     return ret;
   }
+
+  static Map<String, int> getOnlySamonidsMap(KingDefeat data) {
+    Map<String, int> ret = {};
+    ret['coopEnemy23'] = data.coopEnemy23;
+    ret['coopEnemy24'] = data.coopEnemy24;
+    return ret;
+  }
 }

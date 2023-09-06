@@ -10,6 +10,8 @@ import '../../../application/data_interactor.dart';
 import '../../../domain/defeat/defeat.dart';
 import '../../../domain/king_defeat/king_defeat.dart';
 import '../../../domain/state/data_state.dart';
+import '../../../util/converter/defeat_converter.dart';
+import '../../../util/converter/king_defeat_converter.dart';
 import '../../../util/log.dart';
 
 class Profile extends StatefulWidget {
@@ -116,16 +118,10 @@ class _Profile extends State<Profile> {
     return FutureBuilder(
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (_defeat != null && _kingDefeat != null) {
-          Map<String, int> defeatMap = {};
-          // _defeat!.defeatMap.forEach(
-          //   (key, value) {
-          //     if (key != 'Q29vcEVuZW15LTE1' &&
-          //         key != 'Q29vcEVuZW15LTE3' &&
-          //         key != 'Q29vcEVuZW15LTIw') {
-          //       defeatMap[key] = value;
-          //     }
-          //   },
-          // );
+          Map<String, int> defeatMap =
+              DefeatConverter.getOnlySamonidsMap(_defeat!);
+          Map<String, int> kingDefeatMap =
+              KingDefeatConverter.getOnlySamonidsMap(_kingDefeat!);
           return Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(
@@ -143,7 +139,7 @@ class _Profile extends State<Profile> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: WidgetUtil.createText(
-                          '${L10n.of(context)!.countingData} : ', //${_defeat!.num}',
+                          '${L10n.of(context)!.countingData} : ${_defeat!.num}',
                           12),
                     ),
                   ),
@@ -179,11 +175,7 @@ class _Profile extends State<Profile> {
                     ),
                   ),
                   SizedBox(height: 20, child: Container()),
-                  DefeatGraph.createDefeatChart(
-                      context,
-//                      _kingDefeat!.defeatMap,
-                      {},
-                      1,
+                  DefeatGraph.createDefeatChart(context, kingDefeatMap, 1,
                       DefeatGraph.getBottomAxWidgetForKing),
                 ],
               ),

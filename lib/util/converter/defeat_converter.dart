@@ -51,4 +51,20 @@ class DefeatConverter {
     ret['coopEnemy14'] = data.coopEnemy14;
     return ret;
   }
+
+  static Map<String, int> getOnlySamonidsMap(Defeat data) {
+    Map<String, int> ret = {};
+    ret['coopEnemy4'] = data.coopEnemy4;
+    ret['coopEnemy5'] = data.coopEnemy5;
+    ret['coopEnemy6'] = data.coopEnemy6;
+    ret['coopEnemy7'] = data.coopEnemy7;
+    ret['coopEnemy8'] = data.coopEnemy8;
+    ret['coopEnemy9'] = data.coopEnemy9;
+    ret['coopEnemy10'] = data.coopEnemy10;
+    ret['coopEnemy11'] = data.coopEnemy11;
+    ret['coopEnemy12'] = data.coopEnemy12;
+    ret['coopEnemy13'] = data.coopEnemy13;
+    ret['coopEnemy14'] = data.coopEnemy14;
+    return ret;
+  }
 }

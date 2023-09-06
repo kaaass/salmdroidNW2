@@ -29,6 +29,8 @@ class KingDefeatRepository extends IKingDefeatRepository {
   @override
   Future<KingDefeat?> getKingDefeat() async {
     final IsarCollection<KingDefeat> collection = await getCategory();
-    return await collection.where().findFirst();
+    // anyId() is a workaround for sorting in where query
+    // See: https://github.com/isar/isar/issues/843
+    return await collection.where(sort: Sort.desc).anyId().findFirst();
   }
 }

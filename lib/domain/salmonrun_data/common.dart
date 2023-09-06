@@ -586,6 +586,11 @@ class Common {
     return m.group(1).toString();
   }
 
+  static String getBossIdToIdxName(String base) {
+    String decoded = _decodeBase64(base);
+    return decoded.replaceAll(RegExp(r'CoopEnemy-'), 'coopEnemy');
+  }
+
   static String _decodeBase64(String code) {
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     return stringToBase64.decode(code);

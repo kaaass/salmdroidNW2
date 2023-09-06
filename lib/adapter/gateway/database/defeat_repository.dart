@@ -33,6 +33,8 @@ class DefeatRepository extends IDefeatRepository {
     final IsarCollection<Defeat> collection = await getCategory();
     debugPrint('collection: ${await collection.count()}');
     debugPrint('collection: ${await collection.where().count()}');
-    return await collection.where().findFirst();
+    // anyId() is a workaround for sorting in where query
+    // See: https://github.com/isar/isar/issues/843
+    return await collection.where(sort: Sort.desc).anyId().findFirst();
   }
 }
