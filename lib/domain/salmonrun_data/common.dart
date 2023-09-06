@@ -71,6 +71,8 @@ class Common {
         240, //ラピッドブラスター,
     '954a5ea059f841fa5f1cd2596bb32f23b3d3b03fc3fa7972077bdbafe6051215_0.png':
         250, //Rブラスターエリート,
+    '3f8b7fb5cfa592fd251fe4f5707465e539ed79b8d4ae17df75198fbabec2e88f_0.png':
+        260, //S-BLAST '92
     '96833fc0f74242cd2bc73b241aab8a00d499ce9f6557722ef6503e12af8979f4_0.png':
         300, //L3リールガン,
     '418d75d9ca0304922f06eff539c511238b143ef8331969e20d54a9560df57d5a_0.png':
@@ -91,6 +93,8 @@ class Common {
         1100, //パブロ,
     'ce0bb38588e497586a60f16e0aca914f181f42be29953742fd4a55a97e2ebd22_0.png':
         1110, //ホクサイ,
+    'c1f1f56982bd7d28714615a69da6e33c5157ec22b1c62092ec8d60a67b6b29ef_0.png':
+        1120, //Painbrush
     '0cdd6036a6677d68bf28e1014b09a6f5a043e969027e532cd008049baace6527_0.png':
         2000, //スクイックリンα,
     '3f99800b569e286305669b7ab28dc3ff0f0b1b015600569d5ac30ab8a97047a0_0.png':
@@ -115,6 +119,8 @@ class Common {
         3030, //オーバーフロッシャー,
     '1e32f5e1e65793585f6423e4fcae1a146a79d2a09e6e15575015af8a2032a4fe_0.png':
         3040, //エクスプロッシャー,
+    '1cf241ee28b282db23d25f1cce3d586151b9b67f4ba20cf5e2e74c82e988c352_0.png':
+        3050, //Dread Wringer
     '32dbc48e000d5d2015468e1dafc05e7c24581a73e54e758af0c8b9e2db3db550_0.png':
         4000, //スプラスピナー,
     'fd06f01742a3b25ac57941150b3b81d56633831902f2da1f19a6244f2d8dd6fd_0.png':
@@ -125,6 +131,8 @@ class Common {
         4030, //クーゲルシュライバー,
     'be4316928f4b031b470ec2cc2c48fb922a303c882802e32d7fa802249edaa212_0.png':
         4040, //ノーチラス47,
+    '7f0192b8786a6fa7d5ed993022b1667de2fd90dadd8d34a3a7dff9578d34fa0a_0.png':
+        4050, //Heavy Edit Splatling
     'f1c8fc32bd90fc9258dc17e9f9bcfd5e6498f6e283709bf1896b78193b8e39e9_0.png':
         5000, //スパッタリー,
     'b43978029ea582de3aca34549cafd810df20082b94104634093392e11e30d9bd_0.png':
@@ -158,6 +166,8 @@ class Common {
         22900, // charger
     'bf89bcf3d3a51badd78b436266e6b7927d99ac386e083023df3551da6b39e412_0.png':
         23900, // slosher
+    '411abcfee82b63a97af1613885b90daa449f4a847eff6c1d7f093b705040a9f0_0.png':
+        25900, // maneuver
     '3380019464e3111a0f40e633be25f73ad34ec1844d2dc7852a349b29b238932b_0.png':
         26900, // shelter
     '36e03d8d1e6bc4f7449c5450f4410c6c8449cde0548797d22ab641cd488d2060_0.png':
